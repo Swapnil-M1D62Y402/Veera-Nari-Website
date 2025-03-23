@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
+import Link from "next/link"
 
 export default function Hero() {
   return (
@@ -11,19 +12,21 @@ export default function Hero() {
           Veera Nari
         </h1>
         <p className="mx-auto max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-          Stay Protected. Stay Confident.
-🚀 Instant emergency alerts, real-time tracking, and a community that cares.
-📲 One tap is all it takes to ensure your safety—anytime, anywhere.
+         Veera Nari: Instant emergency alerts, real-time tracking, and a community that cares. Stay protected, stay confident, and take control of your safety with just one tap
         </p>
       </div>
       <div className="flex gap-4">
-        <Button size="lg">
+        <Link href="/community">
+          <Button size="lg">
           Explore Community
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
+        </Link>
+        <Link href="/marketplace">
         <Button variant="outline" size="lg">
-          Schedule a Demo
-        </Button>
+          Marketplace
+          </Button>
+          </Link>
       </div>
     </section>
   )

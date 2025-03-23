@@ -7,7 +7,7 @@ import MouseMoveEffect from "@/components/mouse-move-effect"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Veera Nari - Womaen Safety App",
+  title: "Veera Nari - Women Safety App",
   description: "Veera Nari offers solutions to safeguard Women Safety and Marketplace to buy Self-Defence Items",
 }
 

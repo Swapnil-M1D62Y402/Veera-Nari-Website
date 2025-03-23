@@ -1,14 +1,14 @@
-import { MapPin, MessagesSquare, ShoppingBag, ShieldCheck } from "lucide-react";
+import { MapPin, MessagesSquare, ShoppingBag, ShieldCheck, Users, MessageCircle } from "lucide-react";
 
 const features = [
   {
-    name: "GPS Locator",
-    description: "Real-time location tracking to ensure safety and quick assistance in emergencies.",
+    name: "Real-Time Tracking",
+    description: "Real-time location tracking your live location with family and friends during emergencies.",
     icon: MapPin, // Use an appropriate icon (e.g., from Lucide)
   },
   {
     name: "Community Chat",
-    description: "Connect with a support network, share experiences, and find help instantly.",
+    description: "Connect with a network of users who care about your safety, share experiences, and find help instantly.",
     icon: MessagesSquare,
   },
   {
@@ -17,9 +17,19 @@ const features = [
     icon: ShoppingBag,
   },
   {
-    name: "Self-Defense Lessons",
-    description: "Learn crucial self-defense techniques to empower and protect yourself.",
+    name: "Safety Tips & Resources",
+    description: "Access expert advice and resources to stay prepared and Learn crucial self-defense techniques to empower and protect yourself.",
     icon: ShieldCheck,
+  },
+  {
+    name: "Instant Emergency Alerts",
+    description: "Send alerts to trusted contacts with just one tap.",
+    icon: ShieldCheck,
+  },
+  {
+    name: "Chatbot & Safety Consultant",
+    description: "Get instant help and guidance from our AI-powered chatbot or connect with a safety consultant for personalized advice.",
+    icon: MessageCircle,
   },
 ];
 
@@ -35,7 +45,7 @@ export default function Features() {
       </div>
       <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-2">
         {features.map((feature) => (
-          <div key={feature.name} className="relative overflow-hidden rounded-lg border bg-background p-8">
+          <div key={feature.name} className="relative overflow-hidden rounded-lg border bg-[#86469C] p-8 hover:bg-[#BC7FCD] hover:backdrop-blur-md transition-all duration-500">
             <div className="flex items-center gap-4">
               <feature.icon className="h-8 w-8" />
               <h3 className="font-bold">{feature.name}</h3>

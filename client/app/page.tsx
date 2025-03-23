@@ -3,6 +3,7 @@ import Hero from "@/components/hero"
 import Features from "@/components/features"
 import CTA from "@/components/cta"
 import Footer from "@/components/footer"
+import { CarouselComponent } from "@/components/carousel"
 
 export default function Home() {
   return (
@@ -15,7 +16,11 @@ export default function Home() {
       </div>
 
       <div className="relative z-10">
+        <link rel="preload" href="/image_1.jpg" as="image" />
+        <link rel="preload" href="/image_3.jpg" as="image" />
+
         <Navbar />
+        <CarouselComponent />
         <Hero />
         <Features />
         <CTA />
