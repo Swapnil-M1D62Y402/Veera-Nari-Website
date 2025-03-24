@@ -1,9 +1,14 @@
+import Footer from '@/components/footer'
+import Navbar from '@/components/navbar'
+import MarketplacePage from '@/components/market'
 import React from 'react'
 
 const marketplace = () => {
   return (
     <div>
-      MarketPlace Page
+      <Navbar />
+      <MarketplacePage />
+      <Footer />
     </div>
   )
 }
