@@ -1,9 +1,14 @@
 import React from 'react'
+import AboutComponent from '@/components/aboutus'
+import Navbar from '@/components/navbar'
+import Footer from '@/components/footer'
 
 const about_page = () => {
   return (
-    <div>
-      About Page
+    <div className='bg-background'>
+      <Navbar />
+      <AboutComponent />
+      <Footer/>
     </div>
   )
 }

@@ -4,6 +4,7 @@ import Features from "@/components/features"
 import CTA from "@/components/cta"
 import Footer from "@/components/footer"
 import { CarouselComponent } from "@/components/carousel"
+import FAQComponent from "@/components/faq"
 
 export default function Home() {
   return (
@@ -20,9 +21,10 @@ export default function Home() {
         <link rel="preload" href="/image_3.jpg" as="image" />
 
         <Navbar />
-        <CarouselComponent />
         <Hero />
+        <CarouselComponent />
         <Features />
+        <FAQComponent />
         <CTA />
         <Footer />
       </div>

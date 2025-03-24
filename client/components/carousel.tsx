@@ -36,7 +36,7 @@ export function CarouselComponent() {
         <CarouselContent>
           {images.map((src, index) => (
             <CarouselItem key={index}>
-              <div className="p-1 h-[80vh]">
+              <div className="p-1 h-[60vh]">
                 <Card className="h-full">
                   <CardContent className="flex items-center justify-center p-0 h-full">
                     <div className="relative w-full h-full">
