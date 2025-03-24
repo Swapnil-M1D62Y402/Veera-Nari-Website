@@ -24,7 +24,7 @@ const features = [
   {
     name: "Instant Emergency Alerts",
     description: "Send alerts to trusted contacts with just one tap.",
-    icon: ShieldCheck,
+    icon: Users,
   },
   {
     name: "Chatbot & Safety Consultant",

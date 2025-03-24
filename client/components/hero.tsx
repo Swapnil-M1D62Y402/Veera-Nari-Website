@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, AlertCircle, MapPin, Users } from "lucide-react";
+import { ArrowRight, Shield } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";

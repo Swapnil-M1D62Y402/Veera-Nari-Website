@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone } from "lucide-react";
 
@@ -86,9 +85,7 @@ export default function AboutComponent() {
                 Our Mission
               </h2>
               <p className="text-gray-600 dark:text-gray-300">
-                To create a world where safety is accessible to all through technology that's simple, reliable, 
-                and empowering. We combine real-time protection with community support to help people live 
-                confidently and fearlessly.
+                To create a world where safety is accessible to all through technology that&apos;s simple, reliable, and empowering. We combine real-time protection with community support to help people live confidently and fearlessly.
               </p>
             </motion.div>
           </div>
