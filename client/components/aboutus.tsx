@@ -190,11 +190,7 @@ export default function AboutComponent() {
   )
 }
 
-interface ClockProps extends React.SVGProps<SVGSVGElement> {
-  // Add any custom props here if needed
-}
-
-function Clock(props: ClockProps) {  // ✅ Now properly typed
+function Clock(props: React.SVGProps<SVGSVGElement>) {  
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
