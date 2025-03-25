@@ -190,10 +190,13 @@ export default function AboutComponent() {
   )
 }
 
-function Clock(props) {
+interface ClockProps extends React.SVGProps<SVGSVGElement> {
+  // Add any custom props here if needed
+}
+
+function Clock(props: ClockProps) {  // ✅ Now properly typed
   return (
     <svg
-      {...props}
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
@@ -203,6 +206,7 @@ function Clock(props) {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
+      {...props}
     >
       <circle cx="12" cy="12" r="10" />
       <polyline points="12 6 12 12 16 14" />
