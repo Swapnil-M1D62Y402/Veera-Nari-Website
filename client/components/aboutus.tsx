@@ -42,7 +42,7 @@ export default function AboutComponent() {
       <main className="flex-1 bg-gradient-to-b from-gray-50 to-gray-100 py-12 md:py-24 dark:from-gray-900 dark:to-gray-800">
         <div className="container space-y-16 px-4 md:px-6">
           {/* Hero Section */}
-          <motion.div 
+          <motion.div
             initial="hidden"
             animate="visible"
             variants={fadeIn}
@@ -61,7 +61,7 @@ export default function AboutComponent() {
 
           {/* Story & Mission */}
           <div className="mx-auto grid max-w-3xl items-start gap-8 lg:max-w-5xl lg:grid-cols-2">
-            <motion.div 
+            <motion.div
               variants={fadeIn}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="flex flex-col space-y-4 p-6 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700"
@@ -70,13 +70,13 @@ export default function AboutComponent() {
                 Our Story
               </h2>
               <p className="text-gray-600 dark:text-gray-300">
-                Founded in 2025 by Visionary Team, Veera Nari began as a response to growing safety concerns for women and marginalized groups. 
-                What started as a university project has now grown into a trusted safety platform serving thousands of users 
+                Founded in 2025 by Visionary Team, Veera Nari began as a response to growing safety concerns for women and marginalized groups.
+                What started as a university project has now grown into a trusted safety platform serving thousands of users
                 across India with innovative protection solutions.
               </p>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               variants={fadeIn}
               transition={{ duration: 0.3, delay: 0.2 }}
               className="flex flex-col space-y-4 p-6 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700"
@@ -92,14 +92,14 @@ export default function AboutComponent() {
 
           {/* Team Section */}
           <div className="space-y-8">
-            <motion.h2 
+            <motion.h2
               variants={fadeIn}
               transition={{ duration: 0.4, delay: 0.3 }}
               className="text-center text-3xl font-bold tracking-tighter sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600"
             >
               Meet Our Team
             </motion.h2>
-            
+
             <div className="grid max-w-sm gap-8 mx-auto sm:max-w-4xl sm:grid-cols-2 md:gap-8 lg:max-w-5xl lg:grid-cols-3">
               {teamMembers.map((member, index) => (
                 <motion.div
@@ -127,7 +127,7 @@ export default function AboutComponent() {
           </div>
 
           {/* Contact Section */}
-          <motion.div 
+          <motion.div
             variants={fadeIn}
             transition={{ duration: 0.6, delay: 0.8 }}
             className="max-w-3xl mx-auto p-8 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700"
@@ -190,7 +190,7 @@ export default function AboutComponent() {
   )
 }
 
-function Clock(props: React.SVGProps<SVGSVGElement>) {  
+function Clock(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
