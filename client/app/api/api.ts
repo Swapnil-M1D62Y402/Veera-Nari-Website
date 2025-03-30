@@ -7,15 +7,31 @@ export const registerUser = async (userData: {
     email: string,
     password: string
 }) => { 
-    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+    try {
+        const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(userData),
-        credentials: 'include' //cookies
-    });
-    return handleResponse(response);
+        credentials: 'include', //cookies
+        mode: 'cors'
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.message || 'Registration failed');
+        }
+
+        return handleResponse(response);
+    } catch (error) {
+        console.error('Registration error:', error);
+        throw new Error(
+        error instanceof Error 
+            ? error.message 
+            : 'Could not connect to server'
+        );
+    }
 }
 
 export const loginUser = async (credentials: {
@@ -29,7 +45,8 @@ export const loginUser = async (credentials: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(credentials),
-        credentials: 'include'
+        credentials: 'include',
+        mode: 'cors'
         });
         
         if (!response.ok) { 

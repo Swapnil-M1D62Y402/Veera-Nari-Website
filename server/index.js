@@ -9,13 +9,11 @@ dotenv.config();
 const prisma = new PrismaClient()
 const app = express();
 
-const allowedOrigins = [
-  process.env.NODE_ENV === 'development' && 'http://localhost:3000',
-  // Add your production domain later
-].filter(Boolean);
-
 app.use(cors({
-  origin: allowedOrigins,
+  origin: [
+    'http://localhost:3000', 
+    'http://127.0.0.1:3000'
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']

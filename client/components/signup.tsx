@@ -62,7 +62,7 @@ export function SignUpForm({
           <form className="p-6 md:p-8" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
-                <h1 className="text-2xl font-bold">Welcome back</h1>
+                <h1 className="text-2xl font-bold">Welcome</h1>
                 <p className="text-balance text-muted-foreground">
                   Join Veera Nari Today
                 </p>
@@ -93,7 +93,7 @@ export function SignUpForm({
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="m@example.com"
+                  placeholder="sheela.devi@gmail.com"
                   required
                 />
               </div>
@@ -108,13 +108,14 @@ export function SignUpForm({
                     handleChange(e);
                   }}
                   required
+                  placeholder=""
                   minLength={8}
                 />
 
                 <PasswordValidation password={formData.password} />
                 
               </div>
-              
+
               <Button type="submit" className="w-full">
                 Sign Up
               </Button>
