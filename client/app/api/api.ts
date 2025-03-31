@@ -1,5 +1,6 @@
 import handleResponse from "@/lib/utils";
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'
+// api.ts
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 
 export const registerUser = async (userData: { username: string, email: string, password: string }) => { 

@@ -3,11 +3,12 @@
 
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { registerUser, loginUser } from '@/app/api/api';
+import { registerUser, loginUser, getProfile } from '@/app/api/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 type User = {
   id: string;
-  name: string;
+  username: string;
   email: string;
 };
 
@@ -28,7 +29,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
    // Stable auth check function
   const checkAuth = useCallback(async () => {
     try {
-      const response = await fetch('/api/auth/profile', { credentials: 'include' });
+      const response = await fetch(`${API_BASE_URL}/auth/profile`, { credentials: 'include' });
       if (response.ok) setUser(await response.json());
     } catch (error) {
       setUser(null);
