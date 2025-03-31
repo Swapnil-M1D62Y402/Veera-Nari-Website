@@ -22,13 +22,15 @@ export const registerUser = asyncHandler(async (req, res) => {
   const userExistsByEmail = await prisma.user.findUnique({ where: { email: email} });
   if (userExistsByEmail) {
     res.status(400).json({msg: "User already exists with same Email"});
-    throw new Error('User already exists with same Email');
+    console.log("User already exists with same Email");
+    return;
   }
 
   const userExistsByName = await prisma.user.findUnique({ where: { username: username } });
   if (userExistsByName) {
     res.status(400).json({msg: "User already exists with same Email"});
-    throw new Error('User already exists with same Name');
+    console.log("User already exists with same Name");
+    return;
   }
 
   // Hash password
@@ -46,10 +48,10 @@ export const registerUser = asyncHandler(async (req, res) => {
 
   // Generate token and respond
   generateToken(res, user.id);
-  
+
   res.status(201).json({
     id: user.id,
-    username: user.name,
+    username: user.username,
     email: user.email
   });
 });
@@ -64,7 +66,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     generateToken(res, user.id);
     res.json({
       id: user.id,
-      username: user.name,
+      username: user.username,
       email: user.email
     });
   } else { 
@@ -73,13 +75,19 @@ export const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
-export const getUserProfile = asyncHandler(async (req, res) => { 
-  const user = await db.user.findUnique({
-    where: { id: req.user.id },
-    select: {id:true, name: true, email:true, createdAt: true}
-  })
-  res.status(200).json(user);
-})
+// authController.js
+export const getUserProfile = asyncHandler(async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
+      select: {id:true, username: true, email:true, createdAt: true}
+    });
+    res.status(200).json(user); // Explicit JSON
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Server error" }); // Never send HTML
+  }
+});
 
 export const logoutUser = asyncHandler(async (req, res) => {
   res.cookie('jwt', '', {

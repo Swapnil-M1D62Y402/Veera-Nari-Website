@@ -42,11 +42,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const register = async (data: { username: string, email: string, password: string }) => {
     await registerUser(data);
+    await checkAuth(); // Fetch user profile
     router.push('/dashboard');
   };
 
   const login = async (data: { email: string, password: string }) => {
     await loginUser(data);
+    await checkAuth(); // Fetch user profile
     router.push('/dashboard');
   };
 

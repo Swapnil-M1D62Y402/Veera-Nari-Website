@@ -3,27 +3,37 @@ import asyncHandler from 'express-async-handler'
 import db from '../config/db.js'
 
 const protect = asyncHandler(async (req, res, next) => {
-    let token
 
-    token = req.cookies.jwt || (req.headers.authorization?.startsWith('Bearer') && req.headers.authorization.split(' ')[1]);
+    // Log headers and cookies for debugging
+    console.log('Headers:', req.headers);
+    console.log('Cookies:', req.cookies);
+
+    let token = req.cookies.jwt || (req.headers.authorization && req.headers.authorization.split(' ')[1]);
 
     if (!token) {
-        res.status(401).json({ msg: "Auth Error" })
-        throw new Error("Not Authorized, no token");
+        console.error('No token found');
+        return res.status(401).json({ msg: "Not authorized, no token" })
     }
 
     try {
         const decode = jwt.verify(token, process.env.JWT_SECRET);
+        console.log('Decoded Token:', decode);
 
-        req.user = await db.user.findUnique({
+        const user = await db.user.findUnique({
             where: { id: decode.userId },
-            select: { id: true, email: true, name: true }
+            select: { id: true, email: true, username: true }
         });
+
+        if (!user) {
+            console.error('User not found');
+            return res.status(401).json({ msg: "User not found" });
+        }
+        req.user = user;
         next();
 
     } catch (err) {
-        res.status(401).json({ msg: "Auth Error" })
-        throw new Error("Not Authorized, token failed");
+        console.error('Token verification failed:', err.message); // Debug: Log error
+        return res.status(401).json({ msg: "Not authorized, token invalid" });
     }
 });
 
