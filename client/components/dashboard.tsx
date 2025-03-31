@@ -1,8 +1,6 @@
 "use client";
+// Remove unused imports
 import { SidebarNav } from "@/components/sidebar-nav"
-import { ProfileSection } from "@/components/profile-section"
-import { BeltSystem } from "@/components/belt-system"
-import { GameStats } from "@/components/game-stats"
 import { Button } from "@/components/ui/button"
 import { Search, AlertTriangle, MapPin, HeartPulse, Bell, Settings, Loader2 } from "lucide-react"
 import dynamic from 'next/dynamic'
