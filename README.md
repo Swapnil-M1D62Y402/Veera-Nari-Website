@@ -1,10 +1,6 @@
 # Veera-Nari-Website By Team Visionary
 
-Here’s a precise summary of the application architecture based on your Mermaid flowchart, followed by a well-structured `README.md` file for your **Veera-Nari-Website** project.
-
----
-
-## 🔍 **Summary of the Architecture**
+Empowering Women Through Technology – A full-stack web application for women's safety and support.
 
 ### 🧭 Client (Next.js Application)
 - **Pages:**
@@ -30,14 +26,6 @@ Here’s a precise summary of the application architecture based on your Mermaid
 ### 🗄️ Database
 - **Prisma ORM** with schema and migrations
 - Connects from DB config to backend
-
----
-
-## 📄 `README.md` for Veera-Nari-Website
-
-```md
-# Veera-Nari-Website 🛡️
-Empowering Women Through Technology – A full-stack web application for women's safety and support.
 
 ## 🌐 Live Demo
 _Coming Soon_
@@ -125,17 +113,6 @@ npm run dev
 cd server
 npx prisma migrate dev
 ```
-
-## 🤝 Contributing
-Pull requests are welcome. For major changes, please open an issue first.
-
-## 📜 License
-MIT License © Team Visionary
-```
-
-Let me know if you want badges, deployment guide, or contribution guidelines included too.
-
-
 
 ```mermaid
 flowchart TD
@@ -262,3 +239,5 @@ flowchart TD
     click DB "https://github.com/swapnil-m1d62y402/veera-nari-website/tree/main/server/prisma"
 
 ```
+## 🤝 Contributing
+Pull requests are welcome. For major changes, please open an issue first.
