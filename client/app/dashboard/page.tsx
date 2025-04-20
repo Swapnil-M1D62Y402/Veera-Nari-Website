@@ -1,11 +1,10 @@
-import React from 'react'
-import DashboardComponent from "@/components/dashboard"
-const dashboard = () => {
-  return (
-    <div>
-      <DashboardComponent />
-    </div>
-  )
-}
+import LocationTracker from '@/components/LocationTracker';
 
-export default dashboard
+export default function Dashboard() {
+  return (
+    <div className="p-6 max-w-4xl mx-auto">
+      <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
+      <LocationTracker />
+    </div>
+  );
+}
