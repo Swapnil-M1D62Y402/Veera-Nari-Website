@@ -35,7 +35,8 @@ export default function LocationTracker() {
           console.error('Save failed:', err);
         }
       },
-      (err) => setError(err.message)
+      (err) => setError(err.message),
+      { enableHighAccuracy: true }
     );
   };
 
@@ -43,7 +44,7 @@ export default function LocationTracker() {
   useEffect(() => {
     const loadLocation = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/locations`, { 
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/locations`, { 
           credentials: 'include' 
         });
         const data = await res.json();
@@ -67,7 +68,7 @@ export default function LocationTracker() {
       </div>
       
       {position ? (
-        <LiveMap />
+        <LiveMap position={position}/>
       ) : (
         <div className="h-[400px] bg-gray-100 rounded-lg flex items-center justify-center">
           {error || 'No location data available'}

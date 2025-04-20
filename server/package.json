@@ -21,9 +21,11 @@
     "express": "^4.21.2",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
+    "leaflet": "^1.9.4",
     "next-auth": "^4.24.11",
     "pg": "^8.14.1",
-    "psql": "^0.0.1"
+    "psql": "^0.0.1",
+    "react-leaflet": "^5.0.0"
   },
   "devDependencies": {
     "prisma": "^6.5.0"

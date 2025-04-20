@@ -5,7 +5,14 @@ const prisma = new PrismaClient();
 export const createComment = async (req,res) => {
     try{
         const { content } = req.body;
-        const { userId}  = req.user.id;
+
+        console.log('Decoded User:', req.user);
+        if (!req.user || !req.user.id) {
+            return res.status(401).json({ error: 'Not authorized, user not found' });
+        }
+
+        const userId   = req.user.id;
+        console.log('User ID:', req.user.id);
 
         if (!content || content.trim() === '') {
             return res.status(400).json({ error: 'Comment cannot be empty' });
