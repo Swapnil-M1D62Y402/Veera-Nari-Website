@@ -1,9 +1,8 @@
-const {PrismaClient} = require('@prisma/client');
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 
-const createComment = async (req,res) => {
-
+export const createComment = async (req,res) => {
     try{
         const { content } = req.body;
         const { userId}  = req.user.id;
@@ -29,10 +28,9 @@ const createComment = async (req,res) => {
     }
 }
 
-const getComments = async (req, res) => {
+export const getComments = async (req, res) => {
 
     try {
-        
         const comments = await prisma.comment.findMany({
             include: {
                 user: true,
@@ -43,11 +41,10 @@ const getComments = async (req, res) => {
     } catch (error) {
         console.error('Error fetching comments:', error);
         return res.status(500).json({ error: 'Internal server error' });
-        
     }
 }
 
-const deleteComment = async (req, res) => {
+export const deleteComment = async (req, res) => {
     try {
         const { id } = req.params;
         const { userId } = req.user.id;
@@ -63,11 +60,3 @@ const deleteComment = async (req, res) => {
         return res.status(500).json({ error: 'Internal server error' });
     }
 }
-
-module.exports = { createComment, getComments, deleteComment };
-
-
-
-
-
-

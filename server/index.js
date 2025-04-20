@@ -4,6 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import cookieParser from 'cookie-parser'
 import authRoutes from './routes/authRoutes.js'
 import locationRoutes from './routes/locationRoutes.js';
+import commentRoutes from './routes/commentRoutes.js'
 const PORT = 5000;
 import cors from 'cors'; 
 dotenv.config();
@@ -22,8 +23,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Ensure these are correctly imported
 app.use("/api/auth", authRoutes);
+app.use('/api/comments', commentRoutes);
 
 app.get("/", (req, res) => {
     res.send("Backend is running!") 
