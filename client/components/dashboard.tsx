@@ -28,7 +28,7 @@ export default function DashboardComponent() {
     <div className="flex min-h-screen bg-[#121212]">
       <SidebarNav />
       <main className="flex-1 p-6">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-end gap-4 mb-2">
           <div className="flex items-center gap-4">
             <Button variant="outline">Logout</Button>
             <div className="w-10 h-10 rounded-full bg-[#191919] flex items-center justify-center">
