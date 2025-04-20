@@ -1,50 +1,23 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { useAuth } from '@/context/AuthContext';
-import LiveMap from './live_map';
+
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+
+// Dynamically import MapContainer and other Leaflet components
+const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false });
+const TileLayer = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false });
+const Marker = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { ssr: false });
+
+import 'leaflet/dist/leaflet.css';
 
 export default function LocationTracker() {
-  const { user } = useAuth();
   const [position, setPosition] = useState<[number, number] | null>(null);
-  const [error, setError] = useState('');
 
-  const getLocation = () => {
-    if (!navigator.geolocation) {
-      setError('Geolocation not supported');
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      async (pos) => {
-        const newPos: [number, number] = [pos.coords.latitude, pos.coords.longitude];
-        setPosition(newPos);
-        
-        // Save to backend - UPDATED POST REQUEST
-        try {
-          await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/locations`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              latitude: newPos[0],
-              longitude: newPos[1]
-            }),
-            credentials: 'include'
-          });
-        } catch (err) {
-          console.error('Save failed:', err);
-        }
-      },
-      (err) => setError(err.message)
-    );
-  };
-
-  // Load last saved location on mount - UPDATED GET REQUEST
   useEffect(() => {
     const loadLocation = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/locations`, { 
-          credentials: 'include' 
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/locations`, {
+          credentials: 'include',
         });
         if (!res.ok) {
           const text = await res.text();
@@ -56,27 +29,21 @@ export default function LocationTracker() {
         console.error('Load failed:', err);
       }
     };
+
     loadLocation();
   }, []);
 
+  if (!position) {
+    return <div>Loading map...</div>;
+  }
+
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-4">
-        <Button onClick={getLocation}>Get My Location</Button>
-        {position && (
-          <span className="text-sm">
-            {position[0].toFixed(4)}, {position[1].toFixed(4)}
-          </span>
-        )}
-      </div>
-      
-      {position ? (
-        <LiveMap />
-      ) : (
-        <div className="h-[400px] bg-gray-100 rounded-lg flex items-center justify-center">
-          {error || 'No location data available'}
-        </div>
-      )}
-    </div>
+    <MapContainer center={position} zoom={13} style={{ height: '100%', width: '100%' }}>
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      />
+      <Marker position={position} />
+    </MapContainer>
   );
 }
