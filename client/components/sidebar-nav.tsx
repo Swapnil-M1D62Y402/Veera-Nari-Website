@@ -39,7 +39,7 @@ export function SidebarNav() {
       </div>
       <nav className="mt-8 space-y-2">
         <NavItem icon={<Home size={20} />} link="/dashboard" label="Home" active />
-        <NavItem icon={<Calendar size={20} />} link="/community" label="Community" />
+        <NavItem icon={<Calendar size={20} />} link="/comments" label="Community" />
         <NavItem icon={<Store size={20} />} link="/marketplace" label="Marketplace" />
         <NavItem icon={<MessageCircle size={20} />} link="/chat" label="Chat" />
       </nav>

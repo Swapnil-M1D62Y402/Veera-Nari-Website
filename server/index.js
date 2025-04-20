@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { PrismaClient } from '@prisma/client';
 import cookieParser from 'cookie-parser'
 import authRoutes from './routes/authRoutes.js'
+import locationRoutes from './routes/locationRoutes.js';
 const PORT = 5000;
 import cors from 'cors'; 
 dotenv.config();
@@ -16,6 +17,10 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -40,3 +45,5 @@ process.on('SIGTERM', () => {
     process.exit(0);
   });
 });
+
+app.use('/api/locations', locationRoutes);
