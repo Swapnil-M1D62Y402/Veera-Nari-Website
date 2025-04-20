@@ -46,6 +46,10 @@ export default function LocationTracker() {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/locations`, { 
           credentials: 'include' 
         });
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(`API Error: ${text}`);
+        }
         const data = await res.json();
         if (data) setPosition([data.latitude, data.longitude]);
       } catch (err) {
