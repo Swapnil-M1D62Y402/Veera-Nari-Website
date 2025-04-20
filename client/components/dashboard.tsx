@@ -2,9 +2,10 @@
 // Remove unused imports
 import { SidebarNav } from "@/components/sidebar-nav"
 import { Button } from "@/components/ui/button"
-import { Search, AlertTriangle, MapPin, HeartPulse, Bell, Settings, Loader2 } from "lucide-react"
+import { Search, AlertTriangle, MapPin, HeartPulse, Settings, Loader2 } from "lucide-react"
 import dynamic from 'next/dynamic'
 import { useState, useEffect } from "react";
+import LocationTracker from "./LocationTracker";
 
 // Dynamically import the map component to avoid SSR issues
 const MapWithNoSSR = dynamic(() => import('@/components/live_map'), {
@@ -28,21 +29,7 @@ export default function DashboardComponent() {
       <SidebarNav />
       <main className="flex-1 p-6">
         <div className="flex items-center justify-between mb-6">
-          <div className="relative w-full max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search here"
-              className="w-full pl-10 pr-4 py-2 bg-[#191919] rounded-lg text-white placeholder-gray-400 outline-none"
-            />
-          </div>
           <div className="flex items-center gap-4">
-            <Button variant="ghost" className="relative">
-              <Bell className="w-5 h-5" />
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs flex items-center justify-center">
-                3
-              </span>
-            </Button>
             <Button variant="outline">Logout</Button>
             <div className="w-10 h-10 rounded-full bg-[#191919] flex items-center justify-center">
               <Settings className="w-5 h-5 text-gray-400" />
@@ -56,39 +43,21 @@ export default function DashboardComponent() {
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold text-white">Safety Tools</h2>
               <div className="flex gap-2">
-                <Button variant="ghost" className="flex items-center gap-2">
-                  <HeartPulse className="w-5 h-5" />
-                  <span>Medical Info</span>
-                </Button>
               </div>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Button 
-                onClick={triggerSOS}
-                className="bg-red-600 hover:bg-red-700 text-white col-span-1 py-6 flex flex-col items-center gap-2"
-              >
-                <AlertTriangle className="w-8 h-8" />
-                <span className="text-lg font-bold">SOS EMERGENCY</span>
-              </Button>
-              
-              <div className="bg-[#121212] rounded-lg p-4 col-span-2">
+          </div>
+
+          <div className="bg-[#121212] rounded-lg p-4 col-span-2">
                 <h3 className="text-white font-medium mb-2 flex items-center gap-2">
                   <MapPin className="w-5 h-5 text-blue-400" />
                   Live Location Tracking
                 </h3>
-                <div className="h-64 rounded-lg overflow-hidden">
+                <div className="h-80 rounded-lg overflow-hidden">
                     <div className="h-64 rounded-lg overflow-hidden">
-                        {/* Always show loading state */}
-                        <div className="h-full bg-gray-800 flex items-center justify-center text-gray-400">
-                            <Loader2 className="w-8 h-8 animate-spin mr-2" />
-                            Loading map...
-                        </div>
-                        </div>
+                    <LocationTracker />
                     </div>
-              </div>
+                </div>
             </div>
-          </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-6">
