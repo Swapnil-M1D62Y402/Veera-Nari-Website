@@ -22,7 +22,7 @@ export default function LocationTracker() {
         
         // Save to backend - UPDATED POST REQUEST
         try {
-          await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/locations`, {
+          await fetch(`${process.env.NEXT_PUBLIC_API_URL}/locations`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
