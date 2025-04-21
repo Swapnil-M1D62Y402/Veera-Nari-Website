@@ -28,7 +28,7 @@ export default function LocationTracker() {
               latitude: newPos[0],
               longitude: newPos[1]
             }),
-            // credentials: 'include'
+            credentials: 'include'
           });
         } catch (err) {
           console.error('Save failed:', err);
@@ -44,7 +44,7 @@ export default function LocationTracker() {
     const loadLocation = async () => {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/locations`, { 
-          // credentials: 'include' 
+          credentials: 'include' 
         });
         if (!res.ok) {
           const text = await res.text();
