@@ -5,8 +5,8 @@ import db from '../config/db.js'
 const protect = asyncHandler(async (req, res, next) => {
 
     // Log headers and cookies for debugging
-    // console.log('Headers:', req.headers);
-    // console.log('Cookies:', req.cookies);
+    console.log('Headers:', req.headers);
+    console.log('Cookies:', req.cookies);
 
     let token = req.cookies.jwt || (req.headers.authorization && req.headers.authorization.split(' ')[1]);
 
