@@ -57,7 +57,7 @@ export default function LocationTracker() {
   }, []);
 
   return (
-    <div className="space-y-4">
+    <div className="h-[500] space-y-4">
       <div className="flex items-center gap-4">
         <Button onClick={getLocation}>Get My Location</Button>
         {position && (

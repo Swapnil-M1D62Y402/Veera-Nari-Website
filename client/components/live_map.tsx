@@ -34,7 +34,7 @@ export default function LiveMap({ position }:LiveMapProps ) {
   }, []);
 
   return (
-    <div className="h-[400px] w-full rounded-lg border">
+    <div className="h-[500px] w-[500] rounded-lg border">
       {position ? (
         <MapContainer 
           center={position} 
