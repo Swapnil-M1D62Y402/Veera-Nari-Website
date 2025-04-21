@@ -2,7 +2,7 @@
 // Remove unused imports
 import { SidebarNav } from "@/components/sidebar-nav"
 import { Button } from "@/components/ui/button"
-import { Search, AlertTriangle, MapPin, HeartPulse, Settings, Loader2 } from "lucide-react"
+import { MapPin } from "lucide-react"
 import dynamic from 'next/dynamic'
 import { useState, useEffect } from "react";
 import LocationTracker from "./LocationTracker";
@@ -56,13 +56,13 @@ export default function DashboardComponent() {
                         <span>Share Location</span>
                       </Button>
                       <Button variant="outline" className="flex flex-col h-20">
-                        <span>Check-in</span>
+                        <span>Search Safe Routes</span>
                       </Button>
                       <Button variant="outline" className="flex flex-col h-20">
                         <span>Safety Tips</span>
                       </Button>
                       <Button variant="outline" className="flex flex-col h-20">
-                        <span>Contacts</span>
+                        <span>Trusted Contacts</span>
                       </Button>
                     </div>
                   </div>

@@ -17,7 +17,7 @@ export function SignUpForm({
 }: React.ComponentProps<"div">) {
 
   const auth = useAuth();
-  const router = useRouter();
+  // const router = useRouter();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -43,6 +43,10 @@ export function SignUpForm({
     if (!validateEmail(formData.email)) {
       setError('Please enter a valid email address');
       return;
+    }
+
+    if(!isSubmitting){
+      console.log("Submitting");
     }
     
     setIsSubmitting(true);

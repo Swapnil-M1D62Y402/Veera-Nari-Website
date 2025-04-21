@@ -1,7 +1,7 @@
-import { Home, Calendar, MessageCircle, HelpCircle, Settings, Upload, Store } from "lucide-react"
+import { Home, Calendar, MessageCircle, HelpCircle, Upload, Store } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type React from "react" // Added import for React
-import Image from "next/image"
+// import Image from "next/image"
 import Link from "next/link"
 
 interface NavItemProps {
