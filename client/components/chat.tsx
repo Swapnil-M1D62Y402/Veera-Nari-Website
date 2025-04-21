@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -17,15 +17,6 @@ export default function ChatSection() {
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef(null); // Initialize as null
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, isTyping]);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -37,7 +28,7 @@ export default function ChatSection() {
       timestamp: new Date().toLocaleTimeString(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsTyping(true);
 
@@ -51,7 +42,7 @@ export default function ChatSection() {
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
-          messages: [...messages, userMessage].map(msg => ({
+          messages: [...messages, userMessage].map((msg) => ({
             role: msg.role,
             content: msg.text,
           })),
@@ -62,19 +53,25 @@ export default function ChatSection() {
       const data = await response.json();
       const replyText = data.choices[0].message.content;
 
-      setMessages(prev => [...prev, {
-        id: Date.now() + 1,
-        role: "assistant",
-        text: replyText.trim(),
-        timestamp: new Date().toLocaleTimeString(),
-      }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now() + 1,
+          role: "assistant",
+          text: replyText.trim(),
+          timestamp: new Date().toLocaleTimeString(),
+        },
+      ]);
     } catch (error) {
-      setMessages(prev => [...prev, {
-        id: Date.now() + 1,
-        role: "assistant",
-        text: "Sorry, something went wrong. Please try again.",
-        timestamp: new Date().toLocaleTimeString(),
-      }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now() + 1,
+          role: "assistant",
+          text: "Sorry, something went wrong. Please try again.",
+          timestamp: new Date().toLocaleTimeString(),
+        },
+      ]);
     } finally {
       setIsTyping(false);
     }
@@ -95,11 +92,11 @@ export default function ChatSection() {
                   <AvatarFallback className="bg-primary text-primary-foreground">AI</AvatarFallback>
                 </Avatar>
               )}
-              
+
               <div className="flex flex-col gap-1 max-w-[85%]">
                 <div
                   className={`p-3 rounded-xl ${
-                    msg.role === "user" 
+                    msg.role === "user"
                       ? "bg-primary text-primary-foreground"
                       : "bg-muted"
                   }`}
@@ -107,7 +104,7 @@ export default function ChatSection() {
                   <p className="text-sm">{msg.text}</p>
                 </div>
                 <span className="text-xs text-muted-foreground px-2">
-                    {msg.timestamp}
+                  {msg.timestamp}
                 </span>
               </div>
 
@@ -118,7 +115,7 @@ export default function ChatSection() {
               )}
             </div>
           ))}
-          
+
           {isTyping && (
             <div className="flex gap-3">
               <Avatar className="h-8 w-8">
@@ -133,7 +130,6 @@ export default function ChatSection() {
               </div>
             </div>
           )}
-          <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
 
@@ -146,7 +142,7 @@ export default function ChatSection() {
             onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && handleSend()}
             className="rounded-full px-6 focus-visible:ring-1"
           />
-          <Button 
+          <Button
             onClick={handleSend}
             className="rounded-full aspect-square p-3"
             disabled={!input.trim()}
