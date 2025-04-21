@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import DashBoard_Navbar from "./dashboard_navbar";
 
 export default function ChatSection() {
   const [messages, setMessages] = useState([
@@ -81,6 +82,7 @@ export default function ChatSection() {
 
   return (
     <div className="flex flex-col h-[80vh] w-full max-w-3xl mx-auto border rounded-lg overflow-hidden bg-background">
+      <DashBoard_Navbar />
       <ScrollArea className="flex-1 p-4">
         <div className="flex flex-col gap-4">
           {messages.map((msg) => (

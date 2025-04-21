@@ -6,6 +6,7 @@ import { Search, AlertTriangle, MapPin, HeartPulse, Settings, Loader2 } from "lu
 import dynamic from 'next/dynamic'
 import { useState, useEffect } from "react";
 import LocationTracker from "./LocationTracker";
+import DashBoard_Navbar from "./dashboard_navbar";
 
 // Dynamically import the map component to avoid SSR issues
 const MapWithNoSSR = dynamic(() => import('@/components/live_map'), {
@@ -28,35 +29,27 @@ export default function DashboardComponent() {
     <div className="flex min-h-screen bg-[#121212]">
       <SidebarNav />
       <main className="flex-1 p-6">
-        <div className="flex items-center justify-end gap-4 mb-2">
-          <div className="flex items-center gap-4">
-            <Button variant="outline">Logout</Button>
-            <div className="w-10 h-10 rounded-full bg-[#191919] flex items-center justify-center">
-              <Settings className="w-5 h-5 text-gray-400" />
-            </div>
-          </div>
-        </div>
+      <DashBoard_Navbar />
 
         <div className="space-y-6">
           {/* Emergency Section */}
           <div className="bg-[#191919] rounded-lg p-4">
+          <h2 className="text-xl font-bold text-white mb-10">Safety Tools</h2>
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-white">Safety Tools</h2>
-              <div className="flex gap-2">
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-[#121212] rounded-lg p-4 col-span-2">
+              
+            <div className="bg-[#121212] rounded-lg p-4 w-full">
                 <h3 className="text-white font-medium mb-2 flex items-center gap-2">
                   <MapPin className="w-5 h-5 text-blue-400" />
                   Live Location Tracking
                 </h3>
-                <div className="h-[500] w-full flex jusitfy-between rounded-lg overflow-hidden">
-                  <div>
+                <div className="flex flex-col lg:flex-row h-[500px] w-full gap-4 rounded-lg overflow-hidden">
+                  {/* Map Section */}
+                  <div className="flex-1 w-[500]">
                     <LocationTracker />
                   </div>
-                  <div className="bg-[#191919] rounded-lg p-4">
+
+                  {/* Quick Actions Section */}
+                  <div className="bg-[#191919] rounded-lg p-4 flex-1 max-w-[400px]">
                     <h2 className="text-xl font-bold text-white mb-4">Quick Actions</h2>
                     <div className="grid grid-cols-2 gap-3">
                       <Button variant="outline" className="flex flex-col h-20">
@@ -74,23 +67,11 @@ export default function DashboardComponent() {
                     </div>
                   </div>
                 </div>
-            </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 space-y-6">
-              <div className="bg-[#191919] rounded-lg p-4">
-                <h2 className="text-xl font-bold text-white mb-4">Recent Activity</h2>
-                {/* Activity timeline component would go here */}
-                <div className="text-gray-400 text-center py-8">
-                  Activity feed coming soon
-                </div>
               </div>
-            </div>
-            
-            <div className="space-y-6">
-              
-            </div>
+
           </div>
+          </div>
+
         </div>
       </main>
     </div>

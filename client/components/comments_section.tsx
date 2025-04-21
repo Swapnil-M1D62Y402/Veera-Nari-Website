@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import DashBoard_Navbar from './dashboard_navbar';
 
 type Comment = {
   id: number;
@@ -62,6 +63,7 @@ export default function CommentSection() {
 
   return (
     <div className="max-w-2xl mx-auto p-4">
+      <DashBoard_Navbar />
       <h2 className="text-2xl font-bold mb-4">Comments ({comments.length})</h2>
       
       <form onSubmit={handleSubmit} className="mb-8">

@@ -24,12 +24,6 @@ export default function DashBoard_Navbar() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex flex-1 items-center space-x-6 text-sm font-medium">
-          <Link href="/marketplace" className="transition-colors hover:text-primary">
-            Marketplace
-          </Link>
-          <Link href="/community" className="transition-colors hover:text-primary">
-            Community
-          </Link>
           <Link href="/about" className="transition-colors hover:text-primary">
             About Us
           </Link>
@@ -45,11 +39,8 @@ export default function DashBoard_Navbar() {
               <span className="sr-only">GitHub</span>
             </Button>
           </Link>
-          <Link href="/login" className="flex gap-4">
-            <Button variant="ghost" size="sm"> Sign in </Button>
-          </Link>
-          <Link href="/signup">
-            <Button size="sm">Sign up</Button>
+          <Link href="/logout" className="flex gap-4">
+            <Button variant="ghost" size="sm"> Logout </Button>
           </Link>
         </div>
       </div>
