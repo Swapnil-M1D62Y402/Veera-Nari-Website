@@ -31,6 +31,16 @@ Empowering Women Through Technology – A full-stack web application for women's
 _Coming Soon_
 
 ## 🧩 Tech Stack
+## ✨ Features
+
+- User authentication with secure token-based login
+- Real-time alerts for emergencies
+- User profile management
+- Community support and resources
+- Service directory for women's safety and empowerment
+- Responsive design with reusable UI components
+- Backend API with structured routes and controllers
+- Database integration with Prisma ORM for seamless data management
 
 ### Client – [Next.js](https://nextjs.org/)
 - **Pages:**
