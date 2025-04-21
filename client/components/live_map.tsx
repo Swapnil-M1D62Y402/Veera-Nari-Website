@@ -1,27 +1,24 @@
 'use client';
 import dynamic from 'next/dynamic';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-// import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
-const L = dynamic(() => import('leaflet') as any, { ssr: false });
-const leafletPromise = import('leaflet');
-
-// Fix missing marker icons in production
+// Dynamically import react-leaflet components
+const MapContainer = dynamic(() => import('react-leaflet').then((mod) => mod.MapContainer), { ssr: false });
+const TileLayer = dynamic(() => import('react-leaflet').then((mod) => mod.TileLayer), { ssr: false });
+const Marker = dynamic(() => import('react-leaflet').then((mod) => mod.Marker), { ssr: false });
 
 type Position = [number, number];
 type LiveMapProps = {
   position: Position;
 };
 
-export default function LiveMap({ position }:LiveMapProps ) {
-
+export default function LiveMap({ position }: LiveMapProps) {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       // Dynamically import leaflet and set the default icon
       (async () => {
-        const L = await leafletPromise;
+        const L = await import('leaflet');
         const DefaultIcon = L.icon({
           iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
           shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
@@ -34,11 +31,11 @@ export default function LiveMap({ position }:LiveMapProps ) {
   }, []);
 
   return (
-    <div className="h-[500px] w-[500] rounded-lg border">
+    <div className="h-[500px] w-full rounded-lg border">
       {position ? (
-        <MapContainer 
-          center={position} 
-          zoom={13} 
+        <MapContainer
+          center={position}
+          zoom={13}
           className="h-full w-full"
           key={position.toString()} // Force re-render on position change
         >
