@@ -30,12 +30,6 @@ export function SidebarNav() {
   return (
     <div className="w-[240px] bg-[#121212] h-screen p-4 flex flex-col">
       <div className="flex items-center gap-2 px-4 py-2">
-        <Image
-          src={"/logo_2.png"}
-          alt="logo"
-          height={150}
-          width={ 100 }
-        />
       </div>
       <nav className="mt-8 space-y-2">
         <NavItem icon={<Home size={20} />} link="/dashboard" label="Home" active />
