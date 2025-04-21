@@ -63,6 +63,7 @@ export default function ChatSection() {
         },
       ]);
     } catch (error) {
+      console.log(error);
       setMessages((prev) => [
         ...prev,
         {
