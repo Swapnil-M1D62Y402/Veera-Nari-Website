@@ -30,6 +30,7 @@ export default function LiveMap({ position }: LiveMapProps) {
       })();
     }
   }, []);
+  
 
   return (
     <div className="h-[500px] w-full rounded-lg border">
