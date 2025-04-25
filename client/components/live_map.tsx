@@ -1,3 +1,4 @@
+
 'use client';
 import dynamic from 'next/dynamic';
 import 'leaflet/dist/leaflet.css';
@@ -29,6 +30,7 @@ export default function LiveMap({ position }: LiveMapProps) {
       })();
     }
   }, []);
+  
 
   return (
     <div className="h-[500px] w-full rounded-lg border">
@@ -37,6 +39,7 @@ export default function LiveMap({ position }: LiveMapProps) {
           center={position}
           zoom={13}
           className="h-full w-full"
+          style={{ height: "100%", width: "100%" }}
           key={position.toString()} // Force re-render on position change
         >
           <TileLayer
