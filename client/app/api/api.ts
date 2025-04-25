@@ -71,3 +71,69 @@ export const getProfile = async () => {
   return response.json();
 };
 
+
+export const commentService = {
+  async getComments() {
+    const response = await fetch(`${API_BASE_URL}/comments`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch comments');
+    }
+    return response.json();
+  },
+
+  async createComment(content: string) {
+    const response = await fetch(`${API_BASE_URL}/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include',
+      body: JSON.stringify({ content })
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to create comment');
+    }
+    return response.json();
+  },
+
+  async deleteComment(id: number) {
+    const response = await fetch(`${API_BASE_URL}/comments/${id}`, {
+      method: 'DELETE',
+      credentials: 'include'
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete comment');
+    }
+  }
+};
+
+
+export const locationService = {
+    async saveLocation(latitude: number, longitude: number) {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/locations`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ latitude, longitude }),
+        credentials: 'include'
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to save location');
+      }
+      return response.json();
+    },
+  
+    async getLastLocation() {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/locations`, { 
+        credentials: 'include' 
+      });
+      
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`API Error: ${text}`);
+      }
+      return response.json();
+    }
+  };

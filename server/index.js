@@ -8,6 +8,7 @@ import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
 import locationRoutes from "./routes/locationRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
+import sosRoute from "./routes/sosRoute.js"
 
 // Load environment variables
 dotenv.config();
@@ -42,6 +43,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/locations", locationRoutes);
+app.use("/api/sos", sosRoute);
 
 // Root route
 app.get("/", (req, res) => {

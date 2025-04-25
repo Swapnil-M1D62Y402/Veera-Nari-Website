@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import DashBoard_Navbar from "./dashboard_navbar";
+import Link from "next/link";
 
 export default function ChatSection() {
   const [messages, setMessages] = useState([
@@ -20,6 +21,19 @@ export default function ChatSection() {
 
   const handleSend = async () => {
     if (!input.trim()) return;
+
+    const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
+  
+  if (!apiKey) {
+    console.error('OpenAI API key is not defined');
+    setMessages(prev => [...prev, {
+      id: Date.now() + 1,
+      role: "assistant",
+      text: "Error: API key not configured",
+      timestamp: new Date().toLocaleTimeString(),
+    }]);
+    return;
+  }
 
     const userMessage = {
       id: Date.now(),
@@ -38,7 +52,7 @@ export default function ChatSection() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+          Authorization: `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
@@ -81,6 +95,15 @@ export default function ChatSection() {
   return (
     <div className="flex flex-col h-[80vh] w-full max-w-3xl mx-auto border rounded-lg overflow-hidden bg-background">
       <DashBoard_Navbar />
+      <div className="flex justify-between items-center mb-6">
+      <h2 className="text-2xl font-bold">Consultant Chat</h2>
+      <Link 
+        href="/dashboard" 
+        className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+      >
+        Back to Dashboard
+      </Link>
+    </div>
       <ScrollArea className="flex-1 p-4">
         <div className="flex flex-col gap-4">
           {messages.map((msg) => (

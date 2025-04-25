@@ -37,7 +37,7 @@ export default function LiveMap({ position }: LiveMapProps) {
       {position ? (
         <MapContainer
           center={position}
-          zoom={13}
+          zoom={16}
           className="h-full w-full"
           style={{ height: "100%", width: "100%" }}
           key={position.toString()} // Force re-render on position change

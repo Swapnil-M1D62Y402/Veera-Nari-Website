@@ -42,14 +42,14 @@ export default function DashboardComponent() {
                   <MapPin className="w-5 h-5 text-blue-400" />
                   Live Location Tracking
                 </h3>
-                <div className="flex flex-col lg:flex-row h-[500px] w-full gap-4 rounded-lg overflow-hidden">
-                  {/* Map Section */}
-                  <div className="flex-1 w-[500]">
+                <div className="flex lg:flex-row h-[500px] w-full gap-4">
+                  {/* Map Section - Fixed height container */}
+                  <div className="flex-1 h-full">
                     <LocationTracker />
                   </div>
 
-                  {/* Quick Actions Section */}
-                  <div className="bg-[#191919] rounded-lg p-4 flex-1 max-w-[400px]">
+                  {/* Quick Actions Section - Fixed position */}
+                  <div className="bg-[#191919] rounded-lg p-4 w-[300px]">
                     <h2 className="text-xl font-bold text-white mb-4">Quick Actions</h2>
                     <div className="grid grid-cols-2 gap-3">
                       <Button variant="outline" className="flex flex-col h-20">

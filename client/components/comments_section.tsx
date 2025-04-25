@@ -1,6 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
 import DashBoard_Navbar from './dashboard_navbar';
+import { commentService } from '@/app/api/api';
+import Link from 'next/link';
 
 type Comment = {
   id: number;
@@ -19,11 +21,12 @@ export default function CommentSection() {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch comments');
-        }
-        const data = await response.json();
+        // const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments`);
+        // if (!response.ok) {
+        //   throw new Error('Failed to fetch comments');
+        // }
+        // const data = await response.json();
+        const data = await commentService.getComments();
         setComments(data);
       } catch (err) {
         console.error('Error loading comments:', err);
@@ -39,20 +42,20 @@ export default function CommentSection() {
     if (!newComment.trim()) return;
 
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ content: newComment }),
-            credentials: 'include' // Include cookies in the request
-          });
+      //   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments`, {
+      //       method: 'POST',
+      //       headers: {
+      //         'Content-Type': 'application/json'
+      //       },
+      //       body: JSON.stringify({ content: newComment }),
+      //       credentials: 'include' // Include cookies in the request
+      //     });
 
-      if (!response.ok) {
-        throw new Error('Failed to post comment');
-      }
+      // if (!response.ok) {
+      //   throw new Error('Failed to post comment');
+      // }
 
-      const comment = await response.json();
+      const comment = await commentService.createComment(newComment);
       setComments([comment, ...comments]);
       setNewComment('');
     } catch (err) {
@@ -64,8 +67,15 @@ export default function CommentSection() {
   return (
     <div className="max-w-2xl mx-auto p-4">
       <DashBoard_Navbar />
-      <h2 className="text-2xl font-bold mb-4">Comments ({comments.length})</h2>
-      
+      <div className="flex justify-between items-center mb-6">
+      <h2 className="text-2xl font-bold">Comments ({comments.length})</h2>
+      <Link 
+        href="/dashboard" 
+        className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+      >
+        Back to Dashboard
+      </Link>
+    </div>s
       <form onSubmit={handleSubmit} className="mb-8">
         <textarea
           value={newComment}

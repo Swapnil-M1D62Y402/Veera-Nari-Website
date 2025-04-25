@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 // import { useAuth } from '@/context/AuthContext';
 import LiveMap from './live_map';
+import { locationService } from '@/app/api/api';
 
 export default function LocationTracker() {
   const [position, setPosition] = useState<[number, number] | null>(null);
@@ -19,17 +20,8 @@ export default function LocationTracker() {
         const newPos: [number, number] = [pos.coords.latitude, pos.coords.longitude];
         setPosition(newPos);
         
-        // Save to backend - UPDATED POST REQUEST
         try {
-          await fetch(`${process.env.NEXT_PUBLIC_API_URL}/locations`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              latitude: newPos[0],
-              longitude: newPos[1]
-            }),
-            credentials: 'include'
-          });
+          await locationService.saveLocation(newPos[0], newPos[1]);
         } catch (err) {
           console.error('Save failed:', err);
         }
@@ -43,14 +35,7 @@ export default function LocationTracker() {
   useEffect(() => {
     const loadLocation = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/locations`, { 
-          credentials: 'include' 
-        });
-        if (!res.ok) {
-          const text = await res.text();
-          throw new Error(`API Error: ${text}`);
-        }
-        const data = await res.json();
+        const data = await locationService.getLastLocation();
         if (data) setPosition([data.latitude, data.longitude]);
       } catch (err) {
         console.error('Load failed:', err);
@@ -65,23 +50,27 @@ export default function LocationTracker() {
   }
 
   return (
-    <div className="h-[500px] w-[800px] space-y-4">
-      <div className="flex items-center gap-4">
+    <div className="flex flex-col h-full w-full space-y-4">
+      {/* Controls section - Separate from map */}
+      <div className="flex items-center gap-4 p-2 bg-[#191919] rounded-lg">
         <Button onClick={getLocation}>Get My Location</Button>
         {position && (
-          <span className="text-sm">
+          <span className="text-sm text-white">
             {position[0].toFixed(4)}, {position[1].toFixed(4)}
           </span>
         )}
       </div>
-      
-      {position ? (
-        <LiveMap position={position}/>
-      ) : (
-        <div className="h-[400px] bg-gray-100 rounded-lg flex items-center justify-center">
-          {error || 'No location data available'}
-        </div>
-      )}
+
+      {/* Map section */}
+      <div className="flex-1 relative rounded-lg overflow-hidden">
+        {position ? (
+          <LiveMap position={position} />
+        ) : (
+          <div className="h-full bg-gray-100 rounded-lg flex items-center justify-center">
+            {error || 'No location data available'}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
