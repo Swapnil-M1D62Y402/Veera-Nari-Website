@@ -9,6 +9,7 @@ import authRoutes from "./routes/authRoutes.js";
 import locationRoutes from "./routes/locationRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
 import sosRoute from "./routes/sosRoute.js"
+import trustemailRoute from "./routes/trustemailRoute.js"
 
 // Load environment variables
 dotenv.config();
@@ -44,6 +45,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/locations", locationRoutes);
 app.use("/api/sos", sosRoute);
+app.use("/api/trustedemail", trustemailRoute)
 
 // Root route
 app.get("/", (req, res) => {

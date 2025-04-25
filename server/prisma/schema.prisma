@@ -21,6 +21,7 @@ model User {
   password  String
   locations Location[]
   comments Comment[]
+  trustedEmail String?
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 }
