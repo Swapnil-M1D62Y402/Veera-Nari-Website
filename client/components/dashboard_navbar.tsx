@@ -3,12 +3,24 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Github } from "lucide-react"
-// import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-// import { useState } from "react"
 import Image from "next/image";
+import { useAuth } from "@/context/AuthContext";
+import { toast } from 'sonner'
+
 
 export default function DashBoard_Navbar() {
-//   const [open, setOpen] = useState(false)
+
+  const {logout} = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast.success('Logged out successfully');
+    } catch (error) {
+      toast.error('Failed to logout');
+      console.error('Logout error:', error);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -39,9 +51,14 @@ export default function DashBoard_Navbar() {
               <span className="sr-only">GitHub</span>
             </Button>
           </Link>
-          <Link href="/logout" className="flex gap-4">
-            <Button variant="ghost" size="sm"> Logout </Button>
-          </Link>
+            <Button 
+              variant="destructive" 
+              size="sm"
+              onClick={handleLogout}
+              className="mt-auto"
+            > 
+              Logout 
+            </Button>
         </div>
       </div>
     </header>
