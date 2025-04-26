@@ -15,6 +15,12 @@ export default function DashboardComponent() {
   const [isLoading, setIsLoading] = useState(true);
 
   const handleShareLocation = async () => {
+    if (!trustedEmail) {
+      toast.error('Please set a trusted email contact first');
+      setIsEditing(true);
+      return;
+    }
+
     try {
       await sosService.sendSOS();
       console.log("Sos Successfully Sent");
@@ -26,6 +32,11 @@ export default function DashboardComponent() {
   };
 
   const handleUpdateTrustedEmail = async () => {
+    if (!trustedEmail || !trustedEmail.includes('@')) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
+
     try {
       await sosService.updateTrustedEmail(trustedEmail);
       setIsEditing(false);
@@ -40,10 +51,13 @@ export default function DashboardComponent() {
     const fetchTrustedEmail = async () => {
       try {
         const data = await sosService.getTrustedEmail();
-        setTrustedEmail(data.trustedEmail || "");
+        // Only set email if it exists
+        if (data && data.trustedEmail) {
+          setTrustedEmail(data.trustedEmail);
+        }
       } catch (error) {
         console.error("Failed to fetch trusted email:", error);
-        toast.error("Failed to load trusted contact information");
+        //toast.error("Failed to load trusted contact information");  //dont show toast error if trusted email doesnt exists for new user
       } finally {
         setIsLoading(false);
       }

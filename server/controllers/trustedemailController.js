@@ -32,5 +32,6 @@ export const getTrustedEmail = asyncHandler(async (req, res) => {
     return res.status(404).json({message: 'User not found'})
   }
 
-  res.json({trustedEmail: user.trustedEmail });
+  // Return empty string if no trusted email is set
+  res.json({trustedEmail: user.trustedEmail || ''});
 })

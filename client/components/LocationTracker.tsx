@@ -1,13 +1,14 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-// import { useAuth } from '@/context/AuthContext';
 import LiveMap from './live_map';
 import { locationService } from '@/app/api/api';
+import { toast } from 'sonner'
 
 export default function LocationTracker() {
   const [position, setPosition] = useState<[number, number] | null>(null);
   const [error, setError] = useState('');
+  const[isLoading, setIsLoading] = useState(true);
 
   const getLocation = () => {
     if (!navigator.geolocation) {
@@ -31,22 +32,61 @@ export default function LocationTracker() {
     );
   };
 
-  // Load last saved location on mount - UPDATED GET REQUEST
-  useEffect(() => {
-    const loadLocation = async () => {
-      try {
-        const data = await locationService.getLastLocation();
-        if (data) setPosition([data.latitude, data.longitude]);
-      } catch (err) {
-        console.error('Load failed:', err);
-      }
-    };
+  // // Load last saved location on mount - UPDATED GET REQUEST
+  // useEffect(() => {
+  //   const loadLocation = async () => {
+  //     try {
+  //       const data = await locationService.getLastLocation();
+  //       if (data) setPosition([data.latitude, data.longitude]);
+  //     } catch (err) {
+  //       console.error('Load failed:', err);
+  //     }
+  //   };
 
-    loadLocation();
+  //   loadLocation();
+  // }, []);
+
+  // if (!position) {
+  //   return <div>Loading map...</div>;
+  // }
+
+  const getCurrentAndSaveLocation = async () => {
+    if (!navigator.geolocation) {
+      setError('Geolocation not supported');
+      toast.error('Geolocation is not supported by your browser');
+      return;
+    }
+
+    try {
+      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject, {
+          enableHighAccuracy: true,
+          timeout: 10000
+        });
+      });
+
+      const newPos: [number, number] = [
+        position.coords.latitude,
+        position.coords.longitude
+      ];
+      
+      setPosition(newPos);
+      await locationService.saveLocation(newPos[0], newPos[1]);
+    } catch (err) {
+      console.error('Location error:', err);
+      toast.error('Failed to get location');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    // Get location immediately when component mounts
+    getCurrentAndSaveLocation();
   }, []);
 
-  if (!position) {
-    return <div>Loading map...</div>;
+  if (isLoading) {
+    return <div className="text-white">Getting your location...</div>;
   }
 
   return (
