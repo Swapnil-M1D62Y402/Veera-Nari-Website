@@ -8,6 +8,7 @@ type Comment = {
   id: number;
   content: string;
   createdAt: string;
+  isAnonymous: boolean,
   user: {
     username: string;
   };
@@ -16,16 +17,12 @@ type Comment = {
 export default function CommentSection() {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState<string>('');
+  const [isAnonymous, setIsAnonymous] = useState<boolean>(false);
 
   // Fetch comments on mount
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        // const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments`);
-        // if (!response.ok) {
-        //   throw new Error('Failed to fetch comments');
-        // }
-        // const data = await response.json();
         const data = await commentService.getComments();
         setComments(data);
       } catch (err) {
@@ -42,22 +39,10 @@ export default function CommentSection() {
     if (!newComment.trim()) return;
 
     try {
-      //   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments`, {
-      //       method: 'POST',
-      //       headers: {
-      //         'Content-Type': 'application/json'
-      //       },
-      //       body: JSON.stringify({ content: newComment }),
-      //       credentials: 'include' // Include cookies in the request
-      //     });
-
-      // if (!response.ok) {
-      //   throw new Error('Failed to post comment');
-      // }
-
-      const comment = await commentService.createComment(newComment);
+      const comment = await commentService.createComment(newComment, isAnonymous);
       setComments([comment, ...comments]);
       setNewComment('');
+      setIsAnonymous(false);
     } catch (err) {
       console.error('Error posting comment:', err);
       alert('Failed to post comment. Please try again later.');
@@ -68,14 +53,14 @@ export default function CommentSection() {
     <div className="max-w-2xl mx-auto p-4">
       <DashBoard_Navbar />
       <div className="flex justify-between items-center mb-6">
-      <h2 className="text-2xl font-bold">Comments ({comments.length})</h2>
-      <Link 
-        href="/dashboard" 
-        className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
-      >
-        Back to Dashboard
-      </Link>
-    </div>
+        <h2 className="text-2xl font-bold">Comments ({comments.length})</h2>
+        <Link 
+          href="/dashboard" 
+          className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+        >
+          Back to Dashboard
+        </Link>
+      </div>
       <form onSubmit={handleSubmit} className="mb-8">
         <textarea
           value={newComment}
@@ -85,12 +70,23 @@ export default function CommentSection() {
           className="w-full p-3 border rounded-lg text-black focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
           required
         />
-        <button
-          type="submit"
-          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-        >
-          Post Comment
-        </button>
+        <div className="flex items-center justify-between mt-2">
+          <label className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              checked={isAnonymous}
+              onChange={(e) => setIsAnonymous(e.target.checked)}
+              className="rounded border-gray-300"
+            />
+            <span className="text-sm text-gray-600">Post anonymously</span>
+          </label>
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          >
+            Post Comment
+          </button>
+        </div>
       </form>
 
       <div className="space-y-4">
@@ -101,7 +97,9 @@ export default function CommentSection() {
         {comments?.map(comment => (
           <div key={comment.id} className="bg-white p-4 rounded-lg shadow-sm border">
             <div className="flex justify-between items-center mb-2">
-              <span className="font-medium text-gray-700">{comment.user.username}</span>
+              <span className="font-medium text-gray-700">
+                {comment.isAnonymous ? 'Anonymous' : comment.user.username}
+              </span>
               <span className="text-sm text-gray-500">
                 {comment.createdAt
                   ? new Date(comment.createdAt).toLocaleDateString('en-US', {

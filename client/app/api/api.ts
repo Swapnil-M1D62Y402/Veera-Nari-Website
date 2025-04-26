@@ -81,14 +81,14 @@ export const commentService = {
     return response.json();
   },
 
-  async createComment(content: string) {
+  async createComment(content: string, isAnonymous: boolean = false) {
     const response = await fetch(`${API_BASE_URL}/comments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       credentials: 'include',
-      body: JSON.stringify({ content })
+      body: JSON.stringify({ content, isAnonymous })
     });
 
     if (!response.ok) {

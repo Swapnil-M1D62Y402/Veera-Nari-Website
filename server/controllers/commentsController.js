@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export const createComment = async (req,res) => {
     try{
-        const { content } = req.body;
+        const { content, isAnonymous } = req.body;
 
         console.log('Decoded User:', req.user);
         if (!req.user || !req.user.id) {
@@ -22,6 +22,7 @@ export const createComment = async (req,res) => {
             data: {
                 content:  content.trim(),
                 userId: userId,
+                isAnonymous: isAnonymous || false
             },
             include: {
                 user: true,

@@ -39,6 +39,7 @@ model Location {
 model Comment {
   id        Int      @id @default(autoincrement())
   content   String   @db.Text
+  isAnonymous Boolean @default(false)
   userId    Int
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
