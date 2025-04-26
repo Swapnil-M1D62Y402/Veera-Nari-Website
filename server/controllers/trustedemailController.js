@@ -20,4 +20,17 @@ export const updateTrustedEmail = asyncHandler(async (req, res) => {
     });
   
     res.json(updatedUser);
+});
+
+export const getTrustedEmail = asyncHandler(async (req, res) => {
+  const user = await prisma.user.findUnique({
+    where: { id: req.user.id },
+    select: {trustedEmail: true }
   });
+
+  if(!user){
+    return res.status(404).json({message: 'User not found'})
+  }
+
+  res.json({trustedEmail: user.trustedEmail });
+})

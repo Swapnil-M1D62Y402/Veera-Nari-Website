@@ -137,3 +137,49 @@ export const locationService = {
       return response.json();
     }
   };
+
+export const sosService = {
+
+    async sendSOS(){
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sos/sendsos`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if(!response.ok){
+            throw new Error("Failed to send sos");
+        }
+        return response.json();
+    },
+
+    async getTrustedEmail() {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trustedemail`, {
+        credentials: 'include'
+      });
+
+      if(!response.ok){
+        throw new Error('Failed to fetch trusted Email');
+      }
+      return response.json();
+    },
+
+    async updateTrustedEmail(trustedEmail: string) {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trustedemail`, {
+          method: 'PUT',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ trustedEmail })
+        });
+    
+        if (!response.ok) {
+          throw new Error('Failed to update trusted email');
+        }
+        return response.json();
+      }
+};
+

@@ -75,7 +75,7 @@ export default function CommentSection() {
       >
         Back to Dashboard
       </Link>
-    </div>s
+    </div>
       <form onSubmit={handleSubmit} className="mb-8">
         <textarea
           value={newComment}
