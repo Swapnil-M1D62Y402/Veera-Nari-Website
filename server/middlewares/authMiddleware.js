@@ -8,7 +8,17 @@ const protect = asyncHandler(async (req, res, next) => {
     console.log('Headers:', req.headers);
     console.log('Cookies:', req.cookies);
 
-    let token = req.cookies.jwt || (req.headers.authorization && req.headers.authorization.split(' ')[1]);
+    // let token = req.cookies.jwt || (req.headers.authorization && req.headers.authorization.split(' ')[1]);
+    //----CHANGES START
+    let token;
+    
+    // Check for token in cookies first, then authorization header
+    if (req.cookies.jwt) {
+        token = req.cookies.jwt;
+    } else if (req.headers.authorization?.startsWith('Bearer')) {
+        token = req.headers.authorization.split(' ')[1];
+    }
+    //----CHANGES END
 
     if (!token) {
         console.error('No token found');
