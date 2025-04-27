@@ -24,13 +24,17 @@ app.use(
   cors({
     origin: [
       'http://localhost:3000',
-      'https://veera-nari-website-yi2o.vercel.app/' // Replace with your Vercel domain
+      'https://veera-nari-website-yi2o.vercel.app'
     ],
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+    exposedHeaders: ['Set-Cookie'],
   })
 );
+
+// Add OPTIONS handling for preflight requests
+app.options('*', cors());
 
 // Logging middleware (optional)
 app.use((req, res, next) => {
