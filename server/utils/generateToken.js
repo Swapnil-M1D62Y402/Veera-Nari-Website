@@ -5,6 +5,8 @@ const generateToken = (res, userId) => {
     expiresIn: '1d'
   });
 
+  const isProduction = process.env.NODE_ENV === 'production';
+
   // Production Settings 
   res.cookie('jwt', token, {
     httpOnly: true,
@@ -12,7 +14,7 @@ const generateToken = (res, userId) => {
     sameSite: 'None', // Required for cross-site cookies
     maxAge: 24 * 60 * 60 * 1000, // 1 day
     path: '/',
-    // domain: isProduction ? '.your-domain.com' : 'localhost' // Update with your domain
+    domain: isProduction ? '.onrender.com' : 'localhost' // Update with your domain
   });
 
   //Local Development settings
