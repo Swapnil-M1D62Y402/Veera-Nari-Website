@@ -22,7 +22,10 @@ const PORT = process.env.PORT || 5000;
 // CORS Configuration
 app.use(
   cors({
-    origin: true,
+    origin: [
+      'http://localhost:3000',
+      'https://veera-nari-website-yi2o.vercel.app/' // Replace with your Vercel domain
+    ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
