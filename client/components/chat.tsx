@@ -12,7 +12,7 @@ export default function ChatSection() {
     {
       id: 1,
       role: "assistant",
-      text: "Hi! How can I help you today?",
+      text: "Hello! I'm Dr. Safety, your personal safety and wellness consultant. How can I assist you today?",
       timestamp: new Date().toISOString(),
     },
   ]);
