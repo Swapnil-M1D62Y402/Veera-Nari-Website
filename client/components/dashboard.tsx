@@ -149,22 +149,59 @@ export default function DashboardComponent() {
                           </div>
                         )}
                       </div>
-
-                      {/* <Button
-                        variant="outline"
-                        className="flex flex-col h-20"
-                      >
-                        <span>Search Safe Routes</span>
-                      </Button> */}
-                      {/* <Button
-                        variant="outline"
-                        className="flex flex-col h-20"
-                      >
-                        <span>Safety Tips</span>
-                      </Button> */}
-                  
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Emergency Contacts Section */}
+          <div className="bg-[#191919] rounded-lg p-4 mt-6">
+            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              Emergency Contacts
+            </h2>
+            <div className="bg-[#121212] rounded-lg p-4">
+              <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                <div className="flex justify-between items-center p-3 bg-[#232323] hover:bg-[#2A2A2A] rounded-lg transition-colors">
+                  <span className="text-gray-300 text-sm sm:text-base">Police</span>
+                  <Button 
+                    variant="link" 
+                    className="text-blue-400 hover:text-blue-300 text-sm sm:text-base px-2"
+                    onClick={() => window.location.href = 'tel:100'}
+                  >
+                    100
+                  </Button>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-[#232323] hover:bg-[#2A2A2A] rounded-lg transition-colors">
+                  <span className="text-gray-300 text-sm sm:text-base">Women Helpline</span>
+                  <Button 
+                    variant="link" 
+                    className="text-blue-400 hover:text-blue-300 text-sm sm:text-base px-2"
+                    onClick={() => window.location.href = 'tel:1091'}
+                  >
+                    1091
+                  </Button>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-[#232323] hover:bg-[#2A2A2A] rounded-lg transition-colors">
+                  <span className="text-gray-300 text-sm sm:text-base">Ambulance</span>
+                  <Button 
+                    variant="link" 
+                    className="text-blue-400 hover:text-blue-300 text-sm sm:text-base px-2"
+                    onClick={() => window.location.href = 'tel:102'}
+                  >
+                    102
+                  </Button>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-[#232323] hover:bg-[#2A2A2A] rounded-lg transition-colors">
+                  <span className="text-gray-300 text-sm sm:text-base truncate mr-2">Central Kolkata Hospital</span>
+                  <Button 
+                    variant="link" 
+                    className="text-blue-400 hover:text-blue-300 text-sm sm:text-base whitespace-nowrap px-2"
+                    onClick={() => window.location.href = 'tel:+913322040101'}
+                  >
+                    033-2204-0101
+                  </Button>
                 </div>
               </div>
             </div>
