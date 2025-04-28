@@ -23,17 +23,17 @@ export default function ChatSection() {
     if (!input.trim()) return;
 
     const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
-  
-  if (!apiKey) {
-    console.error('OpenAI API key is not defined');
-    setMessages(prev => [...prev, {
-      id: Date.now() + 1,
-      role: "assistant",
-      text: "Error: API key not configured",
-      timestamp: new Date().toLocaleTimeString(),
-    }]);
-    return;
-  }
+
+    if (!apiKey) {
+      console.error('OpenAI API key is not defined');
+      setMessages(prev => [...prev, {
+        id: Date.now() + 1,
+        role: "assistant",
+        text: "Error: API key not configured",
+        timestamp: new Date().toLocaleTimeString(),
+      }]);
+      return;
+    }
 
     const userMessage = {
       id: Date.now(),
@@ -47,7 +47,6 @@ export default function ChatSection() {
     setIsTyping(true);
 
     try {
-      // Replace with your actual API call
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -56,10 +55,20 @@ export default function ChatSection() {
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
-          messages: [...messages, userMessage].map((msg) => ({
-            role: msg.role,
-            content: msg.text,
-          })),
+          messages: [
+            {
+              role: "system",
+              content: "You are Dr. Safety, an experienced safety consultant and mental health professional. Focus on providing supportive, professional advice about personal safety, emergency situations, and mental wellbeing. Always maintain a calm, compassionate, and professional tone. If someone appears to be in immediate danger, recommend contacting emergency services. Remember to: 1) Show empathy and understanding 2) Provide practical safety advice 3) Recommend professional help when needed 4) Prioritize the user's wellbeing and safety"
+            },
+            ...messages.map((msg) => ({
+              role: msg.role,
+              content: msg.text,
+            })),
+            {
+              role: userMessage.role,
+              content: userMessage.text,
+            }
+          ],
           temperature: 0.7,
         }),
       });
