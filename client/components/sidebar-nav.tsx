@@ -1,4 +1,4 @@
-import { Home, Calendar, MessageCircle, HelpCircle, Store, Menu } from "lucide-react"
+import { Home, Calendar, MessageCircle, HelpCircle, Store, Menu, Newspaper } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
 import Link from "next/link"
@@ -43,6 +43,7 @@ export function SidebarNav({ className }: SidebarNavProps) {
   const navItems = [
     { icon: <Home size={20} />, link: "/dashboard", label: "Home", active: true },
     { icon: <Calendar size={20} />, link: "/comments", label: "Community" },
+    { icon: <Newspaper size={20} />, link: "/news", label: "Safety News" },
     { icon: <Store size={20} />, link: "/marketplace", label: "Marketplace" },
     { icon: <MessageCircle size={20} />, link: "/chat", label: "Chat" },
     { icon: <HelpCircle size={20} />, link: "/help", label: "Help" }

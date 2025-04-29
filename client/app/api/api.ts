@@ -218,3 +218,64 @@ export const sosService = {
       }
 };
 
+
+export const newsService = {
+  async getNewsAndTips() {
+    try {
+      const apiKey = process.env.NEXT_PUBLIC_NEWS_API_KEY;
+      
+      if (!apiKey) {
+        throw new Error('News API key is not configured');
+      }
+
+      const newsSources = [
+        // Indian sources
+        'ndtv.com',
+        'hindustantimes.com',
+        'timesofindia.indiatimes.com',
+        'indianexpress.com',
+        // International sources
+        'bbc.com',
+        'reuters.com',
+        'theguardian.com',
+        'nytimes.com',
+        'cnn.com',
+        'aljazeera.com'
+      ].join(',');
+
+      // Use specific Indian news sources and topics
+      const response = await fetch(
+        'https://newsapi.org/v2/everything?' + 
+        'q=(women+safety+OR+women+protection+OR+women+rights)&' +
+        `domains=${newsSources}&` +
+        'language=en&' +
+        'sortBy=publishedAt&' +
+        'pageSize=12', {
+          headers: {
+            'X-Api-Key': apiKey
+          }
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to fetch news');
+      }
+
+      const data = await response.json();
+      
+      // Add default category if missing
+      return {
+        articles: data.articles.map((article: any) => ({
+          ...article,
+          category: 'general' // You can implement your categorization logic here
+        }))
+      };
+
+    } catch (error) {
+      console.error('News API Error:', error);
+      // Return empty articles array to prevent UI errors
+      return { articles: [] };
+    }
+  }
+};
