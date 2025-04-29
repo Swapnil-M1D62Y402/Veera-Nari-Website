@@ -14,11 +14,11 @@ interface NewsArticle {
   };
 }
 
-interface NewsApiResponse {
-  articles: NewsArticle[];
-  status: string;
-  totalResults: number;
-}
+// interface NewsApiResponse {
+//   articles: NewsArticle[];
+//   status: string;
+//   totalResults: number;
+// }
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('jwt');
