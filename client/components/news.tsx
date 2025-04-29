@@ -87,7 +87,7 @@ export default function NewsSection() {
         <DashBoard_Navbar />
         
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-2xl font-bold text-white flex items-center gap-2 mb-6">
+          <h1 className="text-2xl font-bold text-white flex items-center gap-2 mb-6 mt-5">
             <Newspaper className="w-6 h-6 text-blue-400" />
             Latest News & Updates
           </h1>
