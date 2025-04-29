@@ -177,11 +177,12 @@ export const locationService = {
 
 export const sosService = {
 
-    async sendSOS(){
+    async sendSOS(data: {message: string; type: string}){
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sos/sendsos`, {
             method: 'POST',
             credentials: 'include',
-            headers: getAuthHeaders()
+            headers: getAuthHeaders(),
+            body: JSON.stringify(data),
         });
 
         if(!response.ok){

@@ -42,14 +42,33 @@ export const sendSOS = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: 'No location data found' });
   }
 
+  // Get message and type from request body
+  const { message, type } = req.body;
+
+  const getEmergencyTypeDisplay = (type) => {
+    switch(type) {
+      case 'following': return '👥 Someone Following';
+      case 'stalking': return '🚨 Stalking Situation';
+      case 'accident': return '🚗 Accident';
+      case 'medical': return '🏥 Medical Emergency';
+      case 'custom': return '⚠️ Custom Alert';
+      default: return '🆘 General Emergency';
+    }
+  };
+
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: [user.trustedEmail, process.env.POLICE_EMAIL].join(', '),
-    subject: '🚨 EMERGENCY: Location Alert from Safety App',
+    subject: `🚨 EMERGENCY: ${getEmergencyTypeDisplay(type)} Alert from Safety App`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 2px solid #ff0000; border-radius: 10px;">
         <h1 style="color: #ff0000; text-align: center;">🚨 EMERGENCY ALERT 🚨</h1>
         
+        <div style="background-color: #ff0000; color: white; padding: 15px; border-radius: 5px; margin: 10px 0; text-align: center;">
+          <h2 style="margin: 0;">${getEmergencyTypeDisplay(type)}</h2>
+          <p style="margin: 10px 0; font-size: 16px;"><strong>${message}</strong></p>
+        </div>
+
         <div style="background-color: #fff3f3; padding: 15px; border-radius: 5px; margin: 10px 0;">
           <h2 style="color: #333;">Contact Information</h2>
           <p><strong>From:</strong> ${user.username}</p>
@@ -75,6 +94,8 @@ export const sendSOS = asyncHandler(async (req, res) => {
         <div style="background-color: #fff3f3; padding: 15px; border-radius: 5px; margin: 10px 0;">
           <h2 style="color: #333;">Emergency Instructions</h2>
           <ul style="list-style-type: none; padding-left: 0;">
+            <li>✓ Emergency Type: ${getEmergencyTypeDisplay(type)}</li>
+            <li>✓ Emergency Message: ${message}</li>
             <li>✓ Try to contact the person immediately</li>
             <li>✓ Local police has been automatically notified</li>
             <li>✓ Law enforcement is monitoring this location</li>
@@ -94,9 +115,13 @@ export const sendSOS = asyncHandler(async (req, res) => {
 
   try {
     await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: 'Location sent successfully to trusted contact' });
+    res.status(200).json({ 
+      message: 'Emergency alert sent successfully to trusted contact',
+      type: type,
+      emergencyMessage: message 
+    });
   } catch (error) {
     console.error('Email sending error:', error);
-    res.status(500).json({ message: 'Failed to send location email' });
+    res.status(500).json({ message: 'Failed to send emergency alert' });
   }
 });

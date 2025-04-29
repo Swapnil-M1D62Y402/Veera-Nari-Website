@@ -9,10 +9,21 @@ import { sosService } from "@/app/api/api";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 
+// Add this near the top of your dashboard.tsx file after imports
+const EMERGENCY_MESSAGES = [
+  { id: 'following', text: 'Someone is following me' },
+  { id: 'stalking', text: 'Someone is stalking me, send help' },
+  { id: 'accident', text: 'I am in an accident' },
+  { id: 'medical', text: 'I need medical assistance' },
+  {id: 'custom', text: 'Custom message'}
+] as const;
+
 export default function DashboardComponent() {
   const [trustedEmail, setTrustedEmail] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedEmergency, setSelectedEmergency] = useState<string>('');
+  const [customMessage, setCustomMessage] = useState<string>('');
 
   const handleShareLocation = async () => {
     if (!trustedEmail) {
@@ -22,7 +33,15 @@ export default function DashboardComponent() {
     }
 
     try {
-      await sosService.sendSOS();
+
+      const message = selectedEmergency === 'custom'
+        ? customMessage
+        : EMERGENCY_MESSAGES.find(msg => msg.id == selectedEmergency)?.text || '';
+
+      await sosService.sendSOS({
+          message: message || 'Emergency Alert!',
+          type: selectedEmergency || 'general'
+        });
       console.log("Sos Successfully Sent");
       toast.success("Emergency SOS sent successfully");
     } catch (error) {
@@ -96,13 +115,40 @@ export default function DashboardComponent() {
                   Quick Actions
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
-                  <Button
-                    variant="outline"
-                    className="flex flex-col h-16 md:h-20 bg-red-400 w-full"
-                    onClick={handleShareLocation}
-                  >
-                    <span className="text-sm md:text-base">Share Location</span>
-                  </Button>
+                  <div className="flex flex-col gap-2">
+                    <select
+                      value={selectedEmergency}
+                      onChange={(e) => setSelectedEmergency(e.target.value)}
+                      className="w-full p-2 rounded-lg bg-[#2A2A2A] text-white border border-gray-600 focus:border-blue-500"
+                    >
+                      <option value="">Select emergency type</option>
+                      {EMERGENCY_MESSAGES.map((msg) => (
+                        <option key={msg.id} value={msg.id}>
+                          {msg.text}
+                        </option>
+                      ))}
+                    </select>
+
+                    {selectedEmergency === 'custom' && (
+                      <textarea
+                        value={customMessage}
+                        onChange={(e) => setCustomMessage(e.target.value)}
+                        placeholder="Type your custom message..."
+                        className="w-full p-2 rounded-lg bg-[#2A2A2A] text-white border border-gray-600 focus:border-blue-500 min-h-[80px]"
+                      />
+                    )}
+
+                    <Button
+                      variant="outline"
+                      className="flex flex-col h-16 md:h-20 bg-red-400 w-full text-white hover:bg-red-500"
+                      onClick={handleShareLocation}
+                      disabled={!trustedEmail || (selectedEmergency === 'custom' && !customMessage)}
+                    >
+                      <span className="text-sm md:text-base">
+                        {selectedEmergency ? 'Send Emergency Alert' : 'Share Location'}
+                      </span>
+                    </Button>
+                  </div>
 
                   {/* Trusted Email Section */}
                   <div className="col-span-1 sm:col-span-2 lg:col-span-1 bg-[#232323] p-3 md:p-4 rounded-lg mt-2 md:mt-4">
