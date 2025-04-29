@@ -24,6 +24,8 @@ const generateToken = (res, userId) => {
   //   sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
   //   maxAge: 24 * 60 * 60 * 1000, // 1 day
   // });
+
+  return token;
 };
 
 export default generateToken;

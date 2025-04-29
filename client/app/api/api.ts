@@ -2,6 +2,19 @@ import handleResponse from "@/lib/utils";
 // api.ts
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
+const getAuthHeaders = () => {
+  const token = localStorage.getItem('jwt');
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json'
+  };
+
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  return headers;
+};
+
 
 export const registerUser = async (userData: { username: string, email: string, password: string }) => { 
     try {
@@ -57,8 +70,21 @@ export const loginUser = async (credentials: { email: string, password: string }
 
 // api.ts
 export const getProfile = async () => {
+
+  //Changes for Local Storage
+  const token = localStorage.getItem('jwt');
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json'
+  };
+
+  if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+  }
+
+
   const response = await fetch(`${API_BASE_URL}/auth/profile`, {
     credentials: 'include',
+    headers
   });
 
   // Check if response is JSON
@@ -74,7 +100,10 @@ export const getProfile = async () => {
 
 export const commentService = {
   async getComments() {
-    const response = await fetch(`${API_BASE_URL}/comments`);
+    const response = await fetch(`${API_BASE_URL}/comments`, {
+      credentials: 'include',
+      headers: getAuthHeaders()
+    });
     if (!response.ok) {
       throw new Error('Failed to fetch comments');
     }
@@ -84,9 +113,7 @@ export const commentService = {
   async createComment(content: string, isAnonymous: boolean = false) {
     const response = await fetch(`${API_BASE_URL}/comments`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: getAuthHeaders(),
       credentials: 'include',
       body: JSON.stringify({ content, isAnonymous })
     });
@@ -114,9 +141,9 @@ export const locationService = {
     async saveLocation(latitude: number, longitude: number) {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/locations`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        headers: getAuthHeaders(),
         body: JSON.stringify({ latitude, longitude }),
-        credentials: 'include'
       });
   
       if (!response.ok) {
@@ -144,9 +171,7 @@ export const sosService = {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sos/sendsos`, {
             method: 'POST',
             credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            headers: getAuthHeaders()
         });
 
         if(!response.ok){
@@ -157,7 +182,8 @@ export const sosService = {
 
     async getTrustedEmail() {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trustedemail`, {
-        credentials: 'include'
+        credentials: 'include',
+        headers: getAuthHeaders()
       });
 
       if(!response.ok){
@@ -170,9 +196,7 @@ export const sosService = {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trustedemail`, {
           method: 'PUT',
           credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: getAuthHeaders(),
           body: JSON.stringify({ trustedEmail })
         });
     

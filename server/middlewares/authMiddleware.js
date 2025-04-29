@@ -13,10 +13,13 @@ const protect = asyncHandler(async (req, res, next) => {
     let token;
     
     // Check for token in cookies first, then authorization header
-    if (req.cookies.jwt) {
-        token = req.cookies.jwt;
-    } else if (req.headers.authorization?.startsWith('Bearer')) {
+    // First try authorization header
+    if (req.headers.authorization?.startsWith('Bearer')) {
         token = req.headers.authorization.split(' ')[1];
+    }
+    // Then fallback to cookies
+    else if (req.cookies.jwt) {
+        token = req.cookies.jwt;
     }
     //----CHANGES END
 

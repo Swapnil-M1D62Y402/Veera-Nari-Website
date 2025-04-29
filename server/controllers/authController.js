@@ -63,11 +63,12 @@ export const loginUser = asyncHandler(async (req, res) => {
   const user = await prisma.user.findUnique({ where: { email } }) //find user by email
   
   if (user && (await bcrypt.compare(password, user.password))) { 
-    generateToken(res, user.id);
+    const token = generateToken(res, user.id);
     res.json({
       id: user.id,
       username: user.username,
-      email: user.email
+      email: user.email,
+      token //Include token in response to be stored as local storage
     });
   } else { 
     res.status(401).json({msg: "Invalid Credentials"});

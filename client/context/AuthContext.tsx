@@ -25,14 +25,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
+  // Add function to handle token storage
+  const setAuthToken = (token: string) => {
+    if (token) {
+      localStorage.setItem('jwt', token);
+    } else {
+      localStorage.removeItem('jwt');
+    }
+  };
 
    // Stable auth check function
   const checkAuth = useCallback(async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/profile`, { credentials: 'include' });
-      if (response.ok) setUser(await response.json());
+
+      const token = localStorage.getItem('jwt');
+      const headers: HeadersInit = {};
+
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+
+      const response = await fetch(`${API_BASE_URL}/auth/profile`, { 
+        credentials: 'include',
+        headers
+      });
+
+      if (response.ok){
+        const userData = await response.json();
+        setUser(userData);
+      }
     } catch (error) {
       setUser(null);
+      setAuthToken('');
     }
   }, []);  
     
@@ -48,7 +73,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const login = async (data: { email: string, password: string }) => {
-    await loginUser(data);
+    const response = await loginUser(data);
+    if (response.token) {
+      setAuthToken(response.token);
+    }
     await checkAuth(); // Fetch user profile
     router.push('/dashboard');
   };
@@ -56,7 +84,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = () => {
     document.cookie = 'jwt=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     setUser(null);
-    router.push('/login');
+    setAuthToken('');
+    router.push('/');
     };
     
     // Memoize context value
