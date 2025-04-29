@@ -47,12 +47,13 @@ export const registerUser = asyncHandler(async (req, res) => {
   });
 
   // Generate token and respond
-  generateToken(res, user.id);
+  const token = generateToken(res, user.id);
 
   res.status(201).json({
     id: user.id,
     username: user.username,
-    email: user.email
+    email: user.email,
+    token
   });
 });
 

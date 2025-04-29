@@ -35,7 +35,12 @@ export const registerUser = async (userData: { username: string, email: string, 
         throw new Error(errorData.message || 'Registration failed');
         }
 
-        return handleResponse(response);
+        const data = await handleResponse(response);
+        // Store JWT token if it's in the response
+        if (data.token) {
+            localStorage.setItem('jwt', data.token);
+        }
+        return data;
     } catch (error) {
         console.error('Registration error:', error);
         throw new Error(
@@ -61,7 +66,12 @@ export const loginUser = async (credentials: { email: string, password: string }
         if (!response.ok) { 
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        return await handleResponse(response);
+        const data = await handleResponse(response);
+        // Store JWT token if it's in the response
+        if (data.token) {
+            localStorage.setItem('jwt', data.token);
+        }
+        return data;
     } catch (error) {
         console.error('Fetch error:', error);
         throw new Error('Failed to connect to server');
