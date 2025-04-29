@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import DashBoard_Navbar from './dashboard_navbar';
 import { commentService } from '@/app/api/api';
-import Link from 'next/link';
+// import Link from 'next/link';
 import { SidebarNav } from './sidebar-nav';
 
 type Comment = {

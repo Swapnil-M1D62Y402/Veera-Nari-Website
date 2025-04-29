@@ -6,7 +6,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import DashBoard_Navbar from "./dashboard_navbar";
 import { SidebarNav } from "./sidebar-nav";
-import Link from "next/link";
 
 export default function ChatSection() {
   const [messages, setMessages] = useState([
