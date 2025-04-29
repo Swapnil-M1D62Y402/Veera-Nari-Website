@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, JSX } from "react";
+import { useState, useEffect } from "react";
 import { SidebarNav } from "@/components/sidebar-nav";
 import DashBoard_Navbar from "./dashboard_navbar";
 import { newsService } from "@/app/api/api";

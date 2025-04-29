@@ -272,7 +272,7 @@ export const newsService = {
         }))
       };
 
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('News API Error:', error);
       // Return empty articles array to prevent UI errors
       return { articles: [] };
