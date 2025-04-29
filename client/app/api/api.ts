@@ -2,6 +2,24 @@ import handleResponse from "@/lib/utils";
 // api.ts
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
+// Add these interfaces at the top of the file after imports
+interface NewsArticle {
+  title: string;
+  description: string;
+  url: string;
+  urlToImage: string;
+  publishedAt: string;
+  source: {
+    name: string;
+  };
+}
+
+interface NewsApiResponse {
+  articles: NewsArticle[];
+  status: string;
+  totalResults: number;
+}
+
 const getAuthHeaders = () => {
   const token = localStorage.getItem('jwt');
   const headers: HeadersInit = {
@@ -228,54 +246,62 @@ export const newsService = {
         throw new Error('News API key is not configured');
       }
 
-      const newsSources = [
-        // Indian sources
-        'ndtv.com',
-        'hindustantimes.com',
-        'timesofindia.indiatimes.com',
-        'indianexpress.com',
-        // International sources
-        'bbc.com',
-        'reuters.com',
-        'theguardian.com',
-        'nytimes.com',
-        'cnn.com',
-        'aljazeera.com'
-      ].join(',');
+      // Create URL with search params
+      const url = new URL('https://newsapi.org/v2/everything');
+      const params = {
+        q: '(women safety OR women protection OR women rights)',
+        language: 'en',
+        sortBy: 'publishedAt',
+        pageSize: '12',
+        domains: [
+          'ndtv.com',
+          'hindustantimes.com',
+          'timesofindia.indiatimes.com',
+          'indianexpress.com',
+          'bbc.com',
+          'reuters.com',
+          'theguardian.com'
+        ].join(',')
+      };
 
-      // Use specific Indian news sources and topics
-      const response = await fetch(
-        'https://newsapi.org/v2/everything?' + 
-        'q=(women+safety+OR+women+protection+OR+women+rights)&' +
-        `domains=${newsSources}&` +
-        'language=en&' +
-        'sortBy=publishedAt&' +
-        'pageSize=12', {
-          headers: {
-            'X-Api-Key': apiKey
-          }
-        }
-      );
+      // Add search params to URL
+      Object.entries(params).forEach(([key, value]) => {
+        url.searchParams.append(key, value);
+      });
+
+      // Make the request with proper headers
+      const response = await fetch(url.toString(), {
+        method: 'GET',
+        headers: {
+          'X-Api-Key': apiKey,
+          'Accept': 'application/json'
+        },
+        cache: 'no-cache',
+        next: { revalidate: 300 } // Revalidate every 5 minutes
+      });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to fetch news');
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
-      
-      // Add default category if missing
+
       return {
-        articles: data.articles.map((article: any) => ({
-          ...article,
-          category: 'general' // You can implement your categorization logic here
+        articles: data.articles.map((article: NewsArticle) => ({
+          title: article.title || '',
+          description: article.description || '',
+          url: article.url || '',
+          urlToImage: article.urlToImage || '',
+          publishedAt: article.publishedAt || new Date().toISOString(),
+          source: {
+        name: article.source?.name || 'Unknown Source'
+          }
         }))
       };
 
-    } catch (error: unknown) {
+    } catch (error) {
       console.error('News API Error:', error);
-      // Return empty articles array to prevent UI errors
-      return { articles: [] };
+      throw error; // Let the component handle the error
     }
   }
 };

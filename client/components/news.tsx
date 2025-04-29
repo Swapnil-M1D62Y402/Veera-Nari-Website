@@ -9,6 +9,7 @@ import {
   ExternalLink
 } from "lucide-react";
 import { Button } from "./ui/button";
+import Image from "next/image";
 
 interface NewsArticle {
   title: string;
@@ -107,11 +108,16 @@ export default function NewsSection() {
               {news.map((article, index) => (
                 <div key={index} className="bg-[#191919] rounded-lg overflow-hidden hover:bg-[#1d1d1d] transition-colors">
                   {article.urlToImage && (
-                    <img 
-                      src={article.urlToImage} 
+                    <div className="relative w-full h-48">
+                    <Image 
+                      src={article.urlToImage}
                       alt={article.title}
-                      className="w-full h-48 object-cover"
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      priority={index < 6} // Load first 6 images immediately
                     />
+                  </div>
                   )}
                   <div className="p-4">
                     <div className="flex items-center gap-2 text-sm text-gray-400 mb-2">
