@@ -11,50 +11,41 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ml-0 md:ml-64">
-      <div className="container flex h-14 max-w-screen-2xl items-center">
-        {/* Mobile Menu Button */}
-        <div className="flex md:hidden mr-4">
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle Menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-              <SheetHeader>
-                <SheetTitle className="text-left">Menu</SheetTitle>
-              </SheetHeader>
-              <nav className="flex flex-col space-y-6 pt-6">
-                <Link href="/marketplace" onClick={() => setOpen(false)} className="text-lg">
-                  Marketplace
-                </Link>
-                <Link href="/community" onClick={() => setOpen(false)} className="text-lg">
-                  Community
-                </Link>
-                <Link href="/about" onClick={() => setOpen(false)} className="text-lg">
-                  About Us
-                </Link>
-                <Link href="/contact" onClick={() => setOpen(false)} className="text-lg">
-                  Contact Us
-                </Link>
-              </nav>
-            </SheetContent>
-          </Sheet>
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="px-4 md:px-6 mx-auto flex h-14 items-center justify-between max-w-7xl">
+        <div className="flex items-center gap-4">
+          {/* Mobile Menu Button */}
+          <div className="flex md:hidden">
+            <Sheet open={open} onOpenChange={setOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Menu className="h-5 w-5" />
+                  <span className="sr-only">Toggle Menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[300px] sm:w-[400px]">
+                <SheetHeader>
+                  <SheetTitle className="text-left">Menu</SheetTitle>
+                </SheetHeader>
+                <nav className="flex flex-col space-y-6 pt-6">
+                  {/* Mobile menu links */}
+                </nav>
+              </SheetContent>
+            </Sheet>
+          </div>
+
+          <Link href="/" className="flex items-center space-x-2">
+            <Image
+              src="/logo_2.png"
+              alt="logo"
+              width={130}
+              height={100}
+            />
+          </Link>
         </div>
 
-        <Link href="/" className="mr-6 flex items-center space-x-2">
-          <Image
-            src="/logo_2.png"
-            alt="logo"
-            width={130}
-            height={100}
-          />
-        </Link>
-
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex flex-1 items-center space-x-6 text-sm font-medium">
+        <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
           <Link href="/marketplace" className="transition-colors hover:text-primary">
             Marketplace
           </Link>
@@ -69,19 +60,22 @@ export default function Navbar() {
           </Link>
         </nav>
 
-        <div className="flex items-center space-x-4">
+        {/* Auth Buttons */}
+        <div className="flex items-center gap-2">
           <Link href="https://github.com/Swapnil-M1D62Y402/Veera-Nari-Website" target="_blank" rel="noreferrer">
             <Button variant="ghost" size="icon">
               <Github className="h-4 w-4" />
               <span className="sr-only">GitHub</span>
             </Button>
           </Link>
-          <Link href="/login" className="flex gap-4">
-            <Button variant="ghost" size="sm"> Sign in </Button>
-          </Link>
-          <Link href="/signup">
-            <Button size="sm">Sign up</Button>
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link href="/login">
+              <Button variant="ghost" size="sm">Sign in</Button>
+            </Link>
+            <Link href="/signup">
+              <Button size="sm">Sign up</Button>
+            </Link>
+          </div>
         </div>
       </div>
     </header>
