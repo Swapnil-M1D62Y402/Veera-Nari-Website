@@ -22,11 +22,7 @@ const PORT = process.env.PORT || 5000;
 // CORS Configuration
 app.use(
   cors({
-    origin: [
-      'http://localhost:3000',
-      'https://veera-nari-website-yi2o.vercel.app',
-      'https://veera-nari-website-yi2o-ansus-projects-816df668.vercel.app/'
-    ],
+    origin: true,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
