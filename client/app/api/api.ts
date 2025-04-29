@@ -240,44 +240,11 @@ export const sosService = {
 export const newsService = {
   async getNewsAndTips() {
     try {
-      const apiKey = process.env.NEXT_PUBLIC_NEWS_API_KEY;
-      
-      if (!apiKey) {
-        throw new Error('News API key is not configured');
-      }
-
-      // Create URL with search params
-      const url = new URL('https://newsapi.org/v2/everything');
-      const params = {
-        q: '(women safety OR women protection OR women rights)',
-        language: 'en',
-        sortBy: 'publishedAt',
-        pageSize: '12',
-        domains: [
-          'ndtv.com',
-          'hindustantimes.com',
-          'timesofindia.indiatimes.com',
-          'indianexpress.com',
-          'bbc.com',
-          'reuters.com',
-          'theguardian.com'
-        ].join(',')
-      };
-
-      // Add search params to URL
-      Object.entries(params).forEach(([key, value]) => {
-        url.searchParams.append(key, value);
-      });
-
-      // Make the request with proper headers
-      const response = await fetch(url.toString(), {
+      const response = await fetch('/api/news', {
         method: 'GET',
         headers: {
-          'X-Api-Key': apiKey,
           'Accept': 'application/json'
-        },
-        cache: 'no-cache',
-        next: { revalidate: 300 } // Revalidate every 5 minutes
+        }
       });
 
       if (!response.ok) {
