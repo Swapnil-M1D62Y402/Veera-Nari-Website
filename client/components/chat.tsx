@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import DashBoard_Navbar from "./dashboard_navbar";
+import { SidebarNav } from "./sidebar-nav";
 import Link from "next/link";
 
 export default function ChatSection() {
@@ -102,101 +103,107 @@ export default function ChatSection() {
   };
 
   return (
-    <div className="flex flex-col h-[80vh] w-full max-w-3xl mx-auto border rounded-lg overflow-hidden bg-background">
-      <DashBoard_Navbar />
-      <div className="flex justify-between items-center mb-6">
-      <h2 className="text-2xl font-bold">Consultant Chat</h2>
-      <Link 
-        href="/dashboard" 
-        className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
-      >
-        Back to Dashboard
-      </Link>
-    </div>
-      <ScrollArea className="flex-1 p-4">
-        <div className="flex flex-col gap-4">
-          {messages.map((msg) => (
-            <div
-              key={msg.id}
-              className={`flex gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+    <div className="flex flex-col md:flex-row min-h-screen bg-[#121212]">
+      <SidebarNav className="w-full md:w-64" />
+      <main className="flex-1 p-4 md:p-6 overflow-x-hidden">
+        <DashBoard_Navbar />
+        <div className="max-w-3xl mx-auto h-[calc(100vh-120px)]">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-white">Consultant Chat</h2>
+            {/* <Link 
+              href="/dashboard" 
+              className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
             >
-              {msg.role === "assistant" && (
-                <Avatar className="h-8 w-8">
-                  <AvatarFallback className="bg-primary text-primary-foreground">AI</AvatarFallback>
-                </Avatar>
-              )}
+              Back to Dashboard
+            </Link> */}
+          </div>
+          <div className="flex flex-col h-full border rounded-lg overflow-hidden bg-background">
+            <ScrollArea className="flex-1 p-4">
+              <div className="flex flex-col gap-4">
+                {messages.map((msg) => (
+                  <div
+                    key={msg.id}
+                    className={`flex gap-3 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                  >
+                    {msg.role === "assistant" && (
+                      <Avatar className="h-8 w-8">
+                        <AvatarFallback className="bg-primary text-primary-foreground">AI</AvatarFallback>
+                      </Avatar>
+                    )}
 
-              <div className="flex flex-col gap-1 max-w-[85%]">
-                <div
-                  className={`p-3 rounded-xl ${
-                    msg.role === "user"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted"
-                  }`}
+                    <div className="flex flex-col gap-1 max-w-[85%]">
+                      <div
+                        className={`p-3 rounded-xl ${
+                          msg.role === "user"
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-muted"
+                        }`}
+                      >
+                        <p className="text-sm">{msg.text}</p>
+                      </div>
+                      <span className="text-xs text-muted-foreground px-2">
+                        {msg.timestamp}
+                      </span>
+                    </div>
+
+                    {msg.role === "user" && (
+                      <Avatar className="h-8 w-8">
+                        <AvatarFallback className="bg-blue-500 text-white">U</AvatarFallback>
+                      </Avatar>
+                    )}
+                  </div>
+                ))}
+
+                {isTyping && (
+                  <div className="flex gap-3">
+                    <Avatar className="h-8 w-8">
+                      <AvatarFallback className="bg-primary text-primary-foreground">AI</AvatarFallback>
+                    </Avatar>
+                    <div className="flex items-center gap-2 p-3 bg-muted rounded-xl">
+                      <div className="flex space-x-2">
+                        <div className="h-2 w-2 bg-muted-foreground rounded-full animate-pulse"></div>
+                        <div className="h-2 w-2 bg-muted-foreground rounded-full animate-pulse"></div>
+                        <div className="h-2 w-2 bg-muted-foreground rounded-full animate-pulse"></div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </ScrollArea>
+            <div className="border-t p-4 bg-background">
+              <div className="flex gap-2">
+                <Input
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Type your message..."
+                  onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && handleSend()}
+                  className="rounded-full px-6 focus-visible:ring-1"
+                />
+                <Button
+                  onClick={handleSend}
+                  className="rounded-full aspect-square p-3"
+                  disabled={!input.trim()}
                 >
-                  <p className="text-sm">{msg.text}</p>
-                </div>
-                <span className="text-xs text-muted-foreground px-2">
-                  {msg.timestamp}
-                </span>
-              </div>
-
-              {msg.role === "user" && (
-                <Avatar className="h-8 w-8">
-                  <AvatarFallback className="bg-blue-500 text-white">U</AvatarFallback>
-                </Avatar>
-              )}
-            </div>
-          ))}
-
-          {isTyping && (
-            <div className="flex gap-3">
-              <Avatar className="h-8 w-8">
-                <AvatarFallback className="bg-primary text-primary-foreground">AI</AvatarFallback>
-              </Avatar>
-              <div className="flex items-center gap-2 p-3 bg-muted rounded-xl">
-                <div className="flex space-x-2">
-                  <div className="h-2 w-2 bg-muted-foreground rounded-full animate-pulse"></div>
-                  <div className="h-2 w-2 bg-muted-foreground rounded-full animate-pulse"></div>
-                  <div className="h-2 w-2 bg-muted-foreground rounded-full animate-pulse"></div>
-                </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="m22 2-7 20-4-9-9-4Z" />
+                    <path d="M22 2 11 13" />
+                  </svg>
+                </Button>
               </div>
             </div>
-          )}
+          </div>
         </div>
-      </ScrollArea>
-
-      <div className="border-t p-4 bg-background">
-        <div className="flex gap-2">
-          <Input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Type your message..."
-            onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && handleSend()}
-            className="rounded-full px-6 focus-visible:ring-1"
-          />
-          <Button
-            onClick={handleSend}
-            className="rounded-full aspect-square p-3"
-            disabled={!input.trim()}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="m22 2-7 20-4-9-9-4Z" />
-              <path d="M22 2 11 13" />
-            </svg>
-          </Button>
-        </div>
-      </div>
+      </main>
     </div>
   );
 }

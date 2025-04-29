@@ -11,7 +11,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ml-0 md:ml-64">
       <div className="container flex h-14 max-w-screen-2xl items-center">
         {/* Mobile Menu Button */}
         <div className="flex md:hidden mr-4">
