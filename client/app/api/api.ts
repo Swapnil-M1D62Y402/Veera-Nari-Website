@@ -1,5 +1,4 @@
 import handleResponse from "@/lib/utils";
-// api.ts
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 // Add these interfaces at the top of the file after imports
@@ -13,12 +12,6 @@ interface NewsArticle {
     name: string;
   };
 }
-
-// interface NewsApiResponse {
-//   articles: NewsArticle[];
-//   status: string;
-//   totalResults: number;
-// }
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('jwt');
@@ -272,3 +265,59 @@ export const newsService = {
     }
   }
 };
+
+export const consultantService = {
+  async getAllConsultants() {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/consultants`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch consultants');
+    }
+
+    return response.json();
+  },
+
+  async bookAppointment(appointmentData: {
+    consultantId: number;
+    date: string;
+    time: string;
+    status?: string;
+  }) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/appointments`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(appointmentData)
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to book appointment');
+    }
+
+    return response.json();
+  },
+
+  async getUserAppointments() {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/appointments/user`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch user appointments');
+    }
+
+    return response.json();
+  },
+};
+

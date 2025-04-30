@@ -33,6 +33,10 @@ model User {
   notifications Notification[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  sosMessagesAsFirstResponder SosMessage[] @relation("FirstResponderSOS")
+  sosMessagesAsYouth          SosMessage[] @relation("YouthSOS")
+  consultantProfile ConsultantProfile?
+  userAppointments  Appointment[]     @relation("UserAppointments")
 }
 
 // changes made
@@ -43,6 +47,7 @@ model Location {
   latitude  Float
   longitude Float
   createdAt DateTime @default(now())
+  sosMessages SosMessage[]
 }
 
 model Comment {
@@ -64,4 +69,42 @@ model Notification {
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
+}
+
+
+model SosMessage {
+  id               Int      @id @default(autoincrement())
+  message          String
+  createdAt        DateTime @default(now())
+  firstResponderId Int
+  youthId          Int
+  locationId       String
+
+  firstResponder   User     @relation("FirstResponderSOS", fields: [firstResponderId], references: [id])
+  youth            User     @relation("YouthSOS", fields: [youthId], references: [id])
+  location         Location @relation(fields: [locationId], references: [id])
+}
+
+model ConsultantProfile {
+  id          Int          @id @default(autoincrement())
+  userId      Int          @unique
+  user        User         @relation(fields: [userId], references: [id])
+  specialty   String
+  experience  Int          @default(0)
+  available   Boolean      @default(true)
+  appointments Appointment[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Appointment {
+  id          Int              @id @default(autoincrement())
+  userId      Int              // user booking the appointment
+  user        User             @relation("UserAppointments", fields: [userId], references: [id])
+  consultantId Int             // consultant being booked
+  consultant  ConsultantProfile @relation(fields: [consultantId], references: [id])
+  date        DateTime
+  time        String
+  status      String           @default("pending") // pending, confirmed, cancelled
+  createdAt   DateTime         @default(now())
 }
