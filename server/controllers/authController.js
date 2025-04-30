@@ -26,12 +26,12 @@ export const registerUser = asyncHandler(async (req, res) => {
     return;
   }
 
-  const userExistsByName = await prisma.user.findUnique({ where: { username: username } });
-  if (userExistsByName) {
-    res.status(400).json({msg: "User already exists with same Email"});
-    console.log("User already exists with same Name");
-    return;
-  }
+  // const userExistsByName = await prisma.user.findUnique({ where: { username: username } });
+  // if (userExistsByName) {
+  //   res.status(400).json({msg: "User already exists with same Email"});
+  //   console.log("User already exists with same Name");
+  //   return;
+  // }
 
   // Hash password
   const salt = await bcrypt.genSalt(10);
@@ -54,6 +54,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     id: user.id,
     username: user.username,
     email: user.email,
+    userType: user.userType,
     token
   });
 });
