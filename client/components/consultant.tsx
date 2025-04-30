@@ -256,7 +256,7 @@ export default function DoctorAppointment() {
                   </select>
                 </div>
                 
-                {/* <div className="mb-4">
+                <div className="mb-4">
                   <label className="block text-gray-700 mb-2" htmlFor="reason">
                     Reason for Consultation
                   </label>
@@ -267,7 +267,7 @@ export default function DoctorAppointment() {
                     className="w-full p-2 border rounded text-gray-900"
                     rows={3}
                   ></textarea>
-                </div> */}
+                </div>
                 
                 <div className="flex justify-between items-center">
                   <button
