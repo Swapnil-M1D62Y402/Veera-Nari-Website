@@ -41,7 +41,7 @@ export function SidebarNav({ className }: SidebarNavProps) {
   const [open, setOpen] = useState(false)
 
   const navItems = [
-    { icon: <Home size={20} />, link: "/dashboard", label: "Home", active: true },
+    { icon: <Home size={20} />, link: "/dashboard", label: "Dashboard", active: true },
     { icon: <Calendar size={20} />, link: "/comments", label: "Community" },
     { icon: <Newspaper size={20} />, link: "/news", label: "Safety News" },
     { icon: <Store size={20} />, link: "/marketplace", label: "Marketplace" },

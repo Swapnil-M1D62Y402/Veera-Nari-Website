@@ -14,7 +14,7 @@ type User = {
 
 type AuthContextType = {
   user: User | null;
-  register: (data: { username: string, email: string, password: string }) => Promise<void>;
+  register: (data: { username: string, email: string, password: string, userType: string }) => Promise<void>;
   login: (data: { email: string, password: string }) => Promise<void>;
   logout: () => void;
 };
@@ -66,7 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     checkAuth();
   }, [checkAuth]); // Only runs when checkAuth changes
 
-  const register = async (data: { username: string, email: string, password: string }) => {
+  const register = async (data: { username: string, email: string, password: string, userType: string }) => {
     await registerUser(data);
     await checkAuth(); // Fetch user profile
     router.push('/dashboard');

@@ -34,7 +34,7 @@ const getAuthHeaders = () => {
 };
 
 
-export const registerUser = async (userData: { username: string, email: string, password: string }) => { 
+export const registerUser = async (userData: { username: string, email: string, password: string, userType: string }) => { 
     try {
         const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
