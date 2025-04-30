@@ -145,7 +145,7 @@ export default function DashboardComponent() {
                       disabled={!trustedEmail || (selectedEmergency === 'custom' && !customMessage)}
                     >
                       <span className="text-sm md:text-base">
-                        {selectedEmergency ? 'Send Emergency Alert' : 'Share Location'}
+                        {selectedEmergency ? 'Send Emergency SOS' : 'Share Location'}
                       </span>
                     </Button>
                   </div>

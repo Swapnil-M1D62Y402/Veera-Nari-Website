@@ -44,22 +44,27 @@ export default function DashBoard_Navbar() {
           </Link>
         </nav>
 
-        <div className="flex items-center space-x-4">
-          <Link href="https://github.com/Swapnil-M1D62Y402/Veera-Nari-Website" target="_blank" rel="noreferrer">
+        {/* Right-aligned buttons */}
+        <div className="flex items-center gap-2 ml-auto">
+          <Link 
+            href="https://github.com/Swapnil-M1D62Y402/Veera-Nari-Website" 
+            target="_blank" 
+            rel="noreferrer"
+          >
             <Button variant="ghost" size="icon">
               <Github className="h-4 w-4" />
               <span className="sr-only">GitHub</span>
             </Button>
           </Link>
-            <Button 
-              variant="destructive" 
-              size="sm"
-              onClick={handleLogout}
-              className="mt-auto"
-            > 
-              Logout 
-            </Button>
+          <Button 
+            variant="destructive" 
+            size="sm"
+            onClick={handleLogout}
+          > 
+            Logout 
+          </Button>
         </div>
+        
       </div>
     </header>
   )

@@ -29,6 +29,34 @@ export default function Navbar() {
                 </SheetHeader>
                 <nav className="flex flex-col space-y-6 pt-6">
                   {/* Mobile menu links */}
+                  <Link 
+                    href="/marketplace" 
+                    className="text-sm transition-colors hover:text-primary"
+                    onClick={() => setOpen(false)}
+                  >
+                    Marketplace
+                  </Link>
+                  <Link 
+                    href="/community" 
+                    className="text-sm transition-colors hover:text-primary"
+                    onClick={() => setOpen(false)}
+                  >
+                    Community
+                  </Link>
+                  <Link 
+                    href="/about" 
+                    className="text-sm transition-colors hover:text-primary"
+                    onClick={() => setOpen(false)}
+                  >
+                    About Us
+                  </Link>
+                  <Link 
+                    href="/contact" 
+                    className="text-sm transition-colors hover:text-primary"
+                    onClick={() => setOpen(false)}
+                  >
+                    Contact Us
+                  </Link>
                 </nav>
               </SheetContent>
             </Sheet>

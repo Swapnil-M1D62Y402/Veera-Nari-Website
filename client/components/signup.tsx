@@ -21,7 +21,8 @@ export function SignUpForm({
   const [formData, setFormData] = useState({
     username: '',
     email: '',
-    password: ''
+    password: '',
+    userType: 'YOUTH' // add default type
   });
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,7 +32,7 @@ export function SignUpForm({
     return re.test(email);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { id, value } = e.target;
     setFormData(prev => ({ ...prev, [id]: value }));
   };
@@ -118,6 +119,32 @@ export function SignUpForm({
 
                 <PasswordValidation password={formData.password} />
                 
+              </div>
+
+              <div className="grid gap-2">
+              <Label htmlFor="userType">Account Type</Label>
+              <select
+                id="userType"
+                value={formData.userType}
+                onChange={(e) => setFormData(prev => ({ ...prev, userType: e.target.value }))}
+                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                required
+              >
+                <option className="text-black" value="YOUTH">Youth</option>
+                <option className="text-black" value="TRUSTED_CONTACT">Trusted Contact</option>
+                <option className="text-black" value="CONSULTANT">Consultant</option>
+                <option className="text-black" value="FIRST_RESPONDER">First Responder</option>
+              </select>
+              <p className="text-xs text-muted-foreground">
+                {formData.userType === 'TRUSTED_CONTACT' && 
+                  "As a trusted contact, you'll receive SOS notifications from youth who add you."}
+                {formData.userType === 'CONSULTANT' && 
+                  "Consultants provide guidance and support to youth in need."}
+                {formData.userType === 'FIRST_RESPONDER' && 
+                  "First responders receive emergency alerts and location data."}
+                {formData.userType === 'YOUTH' && 
+                  "Youth accounts can send SOS alerts and access support services."}
+              </p>
               </div>
 
               <Button type="submit" className="w-full">

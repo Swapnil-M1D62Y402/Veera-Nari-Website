@@ -14,14 +14,23 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+enum UserType {
+  YOUTH
+  TRUSTED_CONTACT
+  CONSULTANT
+  FIRST_RESPONDER
+}
+
 model User {
   id        Int        @id @default(autoincrement())
   email     String     @unique
   username  String     @unique
   password  String
+  userType  UserType   @default(YOUTH)
   locations Location[]
   comments Comment[]
   trustedEmail String?
+  notifications Notification[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 }
@@ -43,4 +52,16 @@ model Comment {
   userId    Int
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  title     String
+  message   String   @db.Text
+  type      String   // e.g., 'SOS', 'ALERT', 'INFO'
+  isRead    Boolean  @default(false)
+  location  Json?    // Store latitude and longitude
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
 }

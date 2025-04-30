@@ -5,10 +5,10 @@ import generateToken from '../utils/generateToken.js';
 
 // Register user
 export const registerUser = asyncHandler(async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, userType } = req.body;
 
   // Validation
-  if (!username || !email || !password) {
+  if (!username || !email || !password || !userType) {
     res.status(400);
     throw new Error('Please include all fields');
   }
@@ -42,7 +42,8 @@ export const registerUser = asyncHandler(async (req, res) => {
     data: {
       username,
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      userType: userType
     }
   });
 
