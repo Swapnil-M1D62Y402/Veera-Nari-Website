@@ -13,6 +13,22 @@ interface NewsArticle {
   };
 }
 
+interface SOSMessage {
+  id: string;
+  message: string;
+  type: string;
+  createdAt: string;
+  youth: {
+    username: string;
+    email: string;
+  };
+  location: {
+    latitude: number;
+    longitude: number;
+    createdAt: string;
+  };
+}
+
 const getAuthHeaders = () => {
   const token = localStorage.getItem('jwt');
   const headers: HeadersInit = {
@@ -321,3 +337,18 @@ export const consultantService = {
   },
 };
 
+export const firstResponderService = {
+  async getSOSMessages(): Promise<SOSMessage[]> {
+    const response = await fetch(`${API_BASE_URL}/first-responder/sos`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: getAuthHeaders()
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch SOS messages');
+    }
+
+    return response.json();
+  }
+};
