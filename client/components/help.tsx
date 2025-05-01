@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+// import { useState } from 'react';
 import { SidebarNav } from './sidebar-nav';
 import DashBoard_Navbar from './dashboard_navbar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Book, Bell, Mail, MessageCircle, Newspaper, Hospital, Shield, Calendar } from 'lucide-react';
+import { Bell, Mail, MessageCircle, Newspaper, Hospital, Shield, Calendar } from 'lucide-react';
 
 export default function HelpPage() {
   return (
@@ -79,6 +79,34 @@ export default function HelpPage() {
                     </ul>
                   </div>
                 </div>
+
+                <div className="flex items-start gap-4">
+                  <Newspaper className="w-6 h-6 text-yellow-500 mt-1" />
+                  <div>
+                    <h3 className="text-lg font-medium text-white">Safety News</h3>
+                    <p className="text-gray-300">Stay informed with our Safety News feature:</p>
+                    <ul className="list-disc list-inside text-gray-300 ml-4">
+                      <li>Get latest updates on safety measures</li>
+                      <li>Read verified safety tips and guidelines</li>
+                      <li>Access emergency contact information</li>
+                      <li>Stay updated with local safety alerts</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <MessageCircle className="w-6 h-6 text-indigo-500 mt-1" />
+                  <div>
+                    <h3 className="text-lg font-medium text-white">Community Support</h3>
+                    <p className="text-gray-300">Connect with the community:</p>
+                    <ul className="list-disc list-inside text-gray-300 ml-4">
+                      <li>Share experiences and advice</li>
+                      <li>Join support groups</li>
+                      <li>Participate in safety discussions</li>
+                      <li>Get peer support and guidance</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </TabsContent>
@@ -124,6 +152,34 @@ export default function HelpPage() {
                     </ul>
                   </div>
                 </div>
+
+                <div className="flex items-start gap-4">
+                  <Newspaper className="w-6 h-6 text-yellow-500 mt-1" />
+                  <div>
+                    <h3 className="text-lg font-medium text-white">Safety News Management</h3>
+                    <p className="text-gray-300">Share important safety information:</p>
+                    <ul className="list-disc list-inside text-gray-300 ml-4">
+                      <li>Post critical safety updates</li>
+                      <li>Share emergency guidelines</li>
+                      <li>Provide safety tips and resources</li>
+                      <li>Update community alerts</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <MessageCircle className="w-6 h-6 text-indigo-500 mt-1" />
+                  <div>
+                    <h3 className="text-lg font-medium text-white">Community Engagement</h3>
+                    <p className="text-gray-300">Interact with the community:</p>
+                    <ul className="list-disc list-inside text-gray-300 ml-4">
+                      <li>Respond to community concerns</li>
+                      <li>Provide expert safety advice</li>
+                      <li>Participate in safety discussions</li>
+                      <li>Share professional insights</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </TabsContent>
@@ -145,6 +201,34 @@ export default function HelpPage() {
                       <li>View and manage appointments</li>
                       <li>Update appointment status (confirm/cancel)</li>
                       <li>Mark completed appointments as done</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <MessageCircle className="w-6 h-6 text-indigo-500 mt-1" />
+                  <div>
+                    <h3 className="text-lg font-medium text-white">Community Participation</h3>
+                    <p className="text-gray-300">Engage with the community:</p>
+                    <ul className="list-disc list-inside text-gray-300 ml-4">
+                      <li>Share professional advice</li>
+                      <li>Participate in mental health discussions</li>
+                      <li>Provide expert insights</li>
+                      <li>Support community well-being</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <Newspaper className="w-6 h-6 text-yellow-500 mt-1" />
+                  <div>
+                    <h3 className="text-lg font-medium text-white">Safety Resources</h3>
+                    <p className="text-gray-300">Contribute to safety awareness:</p>
+                    <ul className="list-disc list-inside text-gray-300 ml-4">
+                      <li>Share mental health resources</li>
+                      <li>Post professional safety tips</li>
+                      <li>Provide crisis management guidance</li>
+                      <li>Contribute to safety guidelines</li>
                     </ul>
                   </div>
                 </div>

@@ -38,6 +38,7 @@ export default function FirstResponderDashboard() {
             toast.success('SOS message resolved');
         } catch (error) {
             toast.error('Failed to resolve SOS message');
+            console.log(error);
         }
     };
 

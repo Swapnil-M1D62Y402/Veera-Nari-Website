@@ -46,6 +46,7 @@ export default function ConsultantDashboard() {
       setAvailable(data.available);
     } catch (error) {
       toast.error('Failed to load profile');
+      console.log(error);
     }
   };
 
@@ -55,6 +56,7 @@ export default function ConsultantDashboard() {
       setAppointments(data);
     } catch (error) {
       toast.error('Failed to load appointments');
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -73,6 +75,7 @@ export default function ConsultantDashboard() {
       fetchProfile();
     } catch (error) {
       toast.error('Failed to update profile');
+      console.log(error);
     }
   };
 
@@ -83,6 +86,7 @@ export default function ConsultantDashboard() {
       fetchAppointments();
     } catch (error) {
       toast.error('Failed to update appointment status');
+      console.log(error);
     }
   };
 
