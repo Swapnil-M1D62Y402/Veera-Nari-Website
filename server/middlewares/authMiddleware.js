@@ -34,7 +34,7 @@ const protect = asyncHandler(async (req, res, next) => {
 
         const user = await db.user.findUnique({
             where: { id: decode.userId },
-            select: { id: true, email: true, username: true }
+            select: { id: true, email: true, username: true, userType: true }
         });
 
         if (!user) {

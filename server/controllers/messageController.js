@@ -45,6 +45,25 @@ export const sendSOS = asyncHandler(async (req, res) => {
   // Get message and type from request body
   const { message, type } = req.body;
 
+  // Find the first responder user (by email from .env)
+  const firstResponder = await prisma.user.findUnique({
+    where: { email: process.env.POLICE_EMAIL }
+  });
+
+  if (!firstResponder) {
+    return res.status(404).json({ message: 'First responder not found' });
+  }
+
+  // Save the SOS message in the database
+  await prisma.sosMessage.create({
+    data: {
+      message,
+      youthId: user.id,
+      firstResponderId: firstResponder.id,
+      locationId: location.id
+    }
+  });
+
   const getEmergencyTypeDisplay = (type) => {
     switch(type) {
       case 'following': return '👥 Someone Following';
