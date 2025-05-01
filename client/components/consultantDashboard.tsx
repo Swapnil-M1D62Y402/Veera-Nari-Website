@@ -86,11 +86,29 @@ export default function ConsultantDashboard() {
     }
   };
 
+  const handleDeleteAppointment = async (appointmentId: number) => {
+    if (!confirm('Are you sure you want to delete this appointment?')) {
+      return;
+    }
+  
+    try {
+      console.log('Attempting to delete appointment:', appointmentId); // Add logging
+      await consultantService.deleteAppointment(appointmentId);
+      setAppointments(appointments.filter(apt => apt.id !== appointmentId));
+      toast.success('Appointment deleted successfully');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+      console.error('Delete appointment error:', errorMessage); // Add logging
+      toast.error(`Failed to delete appointment: ${errorMessage}`);
+    }
+  };
+
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-[#121212]">
       <SidebarNav className="w-full md:w-64" />
       <main className="flex-1 p-4 md:p-6 overflow-x-hidden">
         <DashBoard_Navbar />
+        <h2 className="text-2xl font-bold text-white mb-4 mt-5">Consultant Dashboard</h2>
         
         {/* Profile Section */}
         <div className="bg-[#191919] rounded-lg p-4 mb-6">
@@ -180,15 +198,23 @@ export default function ConsultantDashboard() {
                       </p>
                       <p className="text-gray-400">Time: {appointment.time}</p>
                     </div>
-                    <select
-                      value={appointment.status}
-                      onChange={(e) => handleUpdateAppointmentStatus(appointment.id, e.target.value)}
-                      className="bg-[#2A2A2A] text-white rounded p-2"
-                    >
-                      <option value="pending">Pending</option>
-                      <option value="confirmed">Confirmed</option>
-                      <option value="cancelled">Cancelled</option>
-                    </select>
+                    <div className="flex gap-2">
+                      <select
+                        value={appointment.status}
+                        onChange={(e) => handleUpdateAppointmentStatus(appointment.id, e.target.value)}
+                        className="bg-[#2A2A2A] text-white rounded p-2"
+                      >
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="cancelled">Cancelled</option>
+                      </select>
+                      <button
+                        onClick={() => handleDeleteAppointment(appointment.id)}
+                        className="p-2 bg-red-600 text-white rounded hover:bg-red-700"
+                      >
+                        Done
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}

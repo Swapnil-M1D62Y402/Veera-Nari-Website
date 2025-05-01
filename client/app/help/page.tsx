@@ -1,9 +1,9 @@
 import React from 'react'
-
+import HelpPage from '@/components/help'
 const page = () => {
   return (
     <div>
-      Help Page
+      <HelpPage />
     </div>
   )
 }

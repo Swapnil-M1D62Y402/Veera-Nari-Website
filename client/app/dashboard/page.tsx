@@ -1,17 +1,9 @@
 "use client"
+import ConsultantDashboard from '@/components/consultantDashboard';
 import DashboardComponent from '@/components/dashboard';
+import FirstResponderDashboard from '@/components/firstResponderDashboard';
 import { useAuth } from '@/context/AuthContext';
 import { useEffect, useState } from 'react';
-import ConsultantDashboard from '@/components/consultantDashboard';
-
-// export default function Dashboard() {
-//   return (
-//     <div className="mx-auto">
-//       <DashboardComponent/>
-//     </div>
-//   );
-// }
-
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -26,6 +18,14 @@ export default function Dashboard() {
     return <div className="text-center py-10 text-white">Loading dashboard...</div>;
   }
 
+  if (user?.userType === 'FIRST_RESPONDER') {
+    return (
+      <div className="mx-auto">
+        <FirstResponderDashboard />
+      </div>
+    );
+  }
+
   if (user?.userType === 'CONSULTANT') {
     return (
       <div className="mx-auto">
@@ -34,7 +34,7 @@ export default function Dashboard() {
     );
   }
 
-  // Default: Youth, Trusted Contact, etc.
+  // Default: Youth
   return (
     <div className="mx-auto">
       <DashboardComponent />

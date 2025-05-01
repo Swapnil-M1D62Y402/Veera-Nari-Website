@@ -9,6 +9,8 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
+import { useAuth } from "@/context/AuthContext"
+import { usePathname } from 'next/navigation'
 
 interface NavItemProps {
   icon: React.ReactNode
@@ -21,12 +23,31 @@ interface SidebarNavProps {
   className?: string;
 }
 
-function NavItem({ icon, label, active, link, onClick }: NavItemProps & { onClick?: () => void }) {
+// function NavItem({ icon, label, active, link, onClick }: NavItemProps & { onClick?: () => void }) {
+//   return (
+//     <div
+//       className={cn(
+//         "flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer",
+//         active ? "bg-[#6d08c3] text-white" : "text-gray-400 hover:bg-[#191919] hover:text-white",
+//       )}
+//       onClick={onClick}
+//     >
+//       <Link href={link} className="flex items-center gap-3 w-full">
+//         {icon} <span className="text-sm font-medium">{label}</span>
+//       </Link>
+//     </div>
+//   )
+// }
+
+function NavItem({ icon, label, link, onClick }: NavItemProps & { onClick?: () => void }) {
+  const pathname = usePathname()
+  const isActive = pathname === link
+
   return (
     <div
       className={cn(
         "flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer",
-        active ? "bg-[#6d08c3] text-white" : "text-gray-400 hover:bg-[#191919] hover:text-white",
+        isActive ? "bg-cyan-600 text-white" : "text-gray-400 hover:bg-[#191919] hover:text-white",
       )}
       onClick={onClick}
     >
@@ -39,16 +60,19 @@ function NavItem({ icon, label, active, link, onClick }: NavItemProps & { onClic
 
 export function SidebarNav({ className }: SidebarNavProps) {
   const [open, setOpen] = useState(false)
+  const {user} = useAuth();
 
-  const navItems = [
-    { icon: <Home size={20} />, link: "/dashboard", label: "Dashboard", active: true },
+  const BaseNavItems = [
+    { icon: <Home size={20} />, link: "/dashboard", label: "Dashboard" },
     { icon: <Calendar size={20} />, link: "/comments", label: "Community" },
     { icon: <Newspaper size={20} />, link: "/news", label: "Safety News" },
-    { icon: <Store size={20} />, link: "/marketplace", label: "Marketplace" },
-    { icon: <MessageCircle size={20} />, link: "/chat", label: "Chat" },
-    { icon: <Hospital size={20} />, link: "/consult", label: "Consultant Doctor" },
+    // { icon: <Store size={20} />, link: "/marketplace", label: "Marketplace" },
     { icon: <HelpCircle size={20} />, link: "/help", label: "Help" }
   ]
+
+  const navItems = user?.userType === 'CONSULTANT' 
+    ? BaseNavItems 
+    : [...BaseNavItems, { icon: <Hospital size={20} />, link: "/consult", label: "Consultant Doctor" }, { icon: <MessageCircle size={20} />, link: "/chat", label: "Chat" }]
 
   return (
     <>

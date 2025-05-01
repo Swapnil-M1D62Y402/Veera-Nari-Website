@@ -13,6 +13,22 @@ interface NewsArticle {
   };
 }
 
+interface SOSMessage {
+  id: string;
+  message: string;
+  type: string;
+  createdAt: string;
+  youth: {
+    username: string;
+    email: string;
+  };
+  location: {
+    latitude: number;
+    longitude: number;
+    createdAt: string;
+  };
+}
+
 const getAuthHeaders = () => {
   const token = localStorage.getItem('jwt');
   const headers: HeadersInit = {
@@ -386,5 +402,51 @@ export const consultantService = {
 
     return response.json();
   },
+  async deleteAppointment(appointmentId: number) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/appointments/${appointmentId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to delete appointment');
+    }
+
+    return response.json();
+  },
 };
 
+export const firstResponderService = {
+  async getSOSMessages(): Promise<SOSMessage[]> {
+    const response = await fetch(`${API_BASE_URL}/first-responder/sos`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: getAuthHeaders()
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch SOS messages');
+    }
+
+    return response.json();
+  },
+  async resolveSOSMessage(messageId: string) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/first-responder/sos/${messageId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to resolve SOS message');
+    }
+
+    return response.json();
+  },
+};

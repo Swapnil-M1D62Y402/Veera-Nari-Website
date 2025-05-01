@@ -10,7 +10,7 @@ type User = {
   id: string;
   username: string;
   email: string;
-  userType: string;
+  userType: 'YOUTH' | 'FIRST_RESPONDER' | 'TRUSTED_CONTACT' | 'CONSULTANT';
 };
 
 type AuthContextType = {
@@ -111,3 +111,4 @@ export const useAuth = () => {
   }
   return context;
 };
+

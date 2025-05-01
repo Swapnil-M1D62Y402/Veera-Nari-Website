@@ -12,6 +12,7 @@ import sosRoute from "./routes/sosRoute.js"
 import trustemailRoute from "./routes/trustemailRoute.js"
 import consultantRoutes from "./routes/consultantRoutes.js";
 import appointmentRoutes from "./routes/appointmentRoutes.js";
+import firstResponderRoute from "./routes/firstResponderRoute.js";
 
 // Load environment variables
 dotenv.config();
@@ -54,6 +55,7 @@ app.use("/api/sos", sosRoute);
 app.use("/api/trustedemail", trustemailRoute)
 app.use("/api/consultants", consultantRoutes);
 app.use("/api/appointments", appointmentRoutes);
+app.use("/api/first-responder", firstResponderRoute);
 
 // Root route
 app.get("/", (req, res) => {

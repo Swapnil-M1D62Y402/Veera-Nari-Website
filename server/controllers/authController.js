@@ -84,7 +84,7 @@ export const getUserProfile = asyncHandler(async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.user.id },
-      select: {id:true, username: true, email:true, createdAt: true}
+      select: {id:true, username: true, email:true, userType:true, createdAt: true}
     });
     res.status(200).json(user); // Explicit JSON
   } catch (err) {
@@ -103,3 +103,4 @@ export const logoutUser = asyncHandler(async (req, res) => {
 
 
 export default { registerUser, loginUser, getUserProfile, loginUser };
+

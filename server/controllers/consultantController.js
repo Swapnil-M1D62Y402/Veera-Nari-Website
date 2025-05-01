@@ -97,3 +97,71 @@ export const updateConsultantProfile = asyncHandler(async (req, res) => {
       profile
     });
 });
+
+export const getConsultantProfile = asyncHandler(async (req, res) => {
+  const userId = req.user.id;
+
+  // Verify user is a consultant
+  const user = await prisma.user.findUnique({
+    where: { 
+      id: userId,
+      userType: 'CONSULTANT'
+    },
+    include: {
+      consultantProfile: true
+    }
+  });
+
+  if (!user) {
+    res.status(404);
+    throw new Error('User not found');
+  }
+
+  if (!user.consultantProfile) {
+    res.status(404);
+    throw new Error('Consultant profile not found');
+  }
+
+  res.json(user.consultantProfile);
+});
+
+// Get consultant appointments
+export const getConsultantAppointments = asyncHandler(async (req, res) => {
+  const userId = req.user.id;
+
+  // Verify user is a consultant
+  const consultant = await prisma.user.findUnique({
+    where: { 
+      id: userId,
+      userType: 'CONSULTANT'
+    },
+    include: {
+      consultantProfile: true
+    }
+  });
+
+  if (!consultant?.consultantProfile) {
+    res.status(404);
+    throw new Error('Consultant profile not found');
+  }
+
+  // Get appointments for this consultant
+  const appointments = await prisma.appointment.findMany({
+    where: {
+      consultantId: consultant.consultantProfile.id
+    },
+    include: {
+      user: {
+        select: {
+          username: true,
+          email: true
+        }
+      }
+    },
+    orderBy: {
+      date: 'desc'
+    }
+  });
+
+  res.json(appointments);
+});
