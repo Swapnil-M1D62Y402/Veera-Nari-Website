@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { useAuth } from "@/context/AuthContext";
+// import Link from "next/link";
+// import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import DashBoard_Navbar from "@/components/dashboard_navbar";
@@ -27,7 +27,7 @@ interface SOSMessage {
 export default function FirstResponderDashboard() {
   const [messages, setMessages] = useState<SOSMessage[]>([]);
   const [selected, setSelected] = useState<SOSMessage | null>(null);
-  const { logout } = useAuth();
+//   const { logout } = useAuth();
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/first-responder/sos`, {
