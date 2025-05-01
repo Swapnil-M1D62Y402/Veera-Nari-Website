@@ -319,5 +319,72 @@ export const consultantService = {
 
     return response.json();
   },
+  async getConsultantProfile() {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/consultants/profile`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch profile');
+    }
+
+    return response.json();
+  },
+
+  async updateProfile(profileData: {
+    specialty: string;
+    experience: number;
+    available: boolean;
+  }) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/consultants/profile`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(profileData),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update profile');
+    }
+
+    return response.json();
+  },
+
+  async getConsultantAppointments() {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/consultants/appointments`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch appointments');
+    }
+
+    return response.json();
+  },
+
+  async updateAppointmentStatus(appointmentId: number, status: string) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/appointments/${appointmentId}/status`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update appointment status');
+    }
+
+    return response.json();
+  },
 };
 

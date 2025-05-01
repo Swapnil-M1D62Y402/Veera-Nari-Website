@@ -10,6 +10,7 @@ type User = {
   id: string;
   username: string;
   email: string;
+  userType: string;
 };
 
 type AuthContextType = {
